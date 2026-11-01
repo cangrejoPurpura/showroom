@@ -1,0 +1,1108 @@
+[
+  {
+    "id": "mesada",
+    "name": "Mesada Superior (Grupo#73)",
+    "code": "Grupo#73",
+    "layer": "Layer_Mesada y zocalo",
+    "zone": "mesada",
+    "mat": "amberes",
+    "orig_mat": "058DMT Amberes",
+    "edges": "0,1,0,1",
+    "uv_rot": 0,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      1906.0,
+      20.0,
+      600.0
+    ],
+    "cut_dims": "1906 × 600 × 20 mm",
+    "tbox": [
+      -0.953,
+      0.88,
+      -0.3,
+      0.953,
+      0.9,
+      0.3
+    ]
+  },
+  {
+    "id": "zocalo",
+    "name": "Zócalo Frontal Recedido (Grupo#74)",
+    "code": "Grupo#74",
+    "layer": "Layer_Mesada y zocalo",
+    "zone": "zocalo",
+    "mat": "chromix_plata",
+    "orig_mat": "F638 ST10 Chromix plata",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      1906.0,
+      95.0,
+      530.0
+    ],
+    "cut_dims": "1906 × 530 × 95 mm",
+    "tbox": [
+      -0.953,
+      0.0,
+      -0.3,
+      0.953,
+      0.095,
+      0.23
+    ]
+  },
+  {
+    "id": "base_izq",
+    "name": "Base Módulo Izquierdo (BM-2-Base)",
+    "code": "BM-2-Base",
+    "layer": "Layer_Bases",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco1",
+    "edges": "1,0,0,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      443.0,
+      18.0,
+      558.0
+    ],
+    "cut_dims": "558 × 443 × 18 mm",
+    "tbox": [
+      -0.953,
+      0.095,
+      -0.295,
+      -0.51,
+      0.113,
+      0.263
+    ]
+  },
+  {
+    "id": "base_caj",
+    "name": "Base Módulo Cajonero (BM-CJ-Base)",
+    "code": "BM-CJ-Base",
+    "layer": "Layer_Bases",
+    "zone": "mesada",
+    "mat": "amberes",
+    "orig_mat": "058DMT Amberes",
+    "edges": "0,0,0,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      441.0,
+      18.0,
+      558.0
+    ],
+    "cut_dims": "558 × 441 × 18 mm",
+    "tbox": [
+      -0.51,
+      0.095,
+      -0.295,
+      -0.069,
+      0.113,
+      0.263
+    ]
+  },
+  {
+    "id": "base_der",
+    "name": "Base Módulo Derecho / Rincón (BM-1Base)",
+    "code": "BM-1Base",
+    "layer": "Layer_Bases",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco1",
+    "edges": "0,1,0,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      1016.0,
+      18.0,
+      558.0
+    ],
+    "cut_dims": "1016 × 558 × 18 mm",
+    "tbox": [
+      -0.069,
+      0.095,
+      -0.295,
+      0.947,
+      0.113,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_1",
+    "name": "Lateral Izquierdo Extremo (BM-Lat)",
+    "code": "BM-Lat #1",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": true,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      -0.953,
+      0.113,
+      -0.295,
+      -0.935,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_2",
+    "name": "Lateral Divisorio Izq. (BM-Lat)",
+    "code": "BM-Lat #2",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": true,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      -0.528,
+      0.113,
+      -0.295,
+      -0.51,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_3",
+    "name": "Lateral Cajonero Izq. (BM-Lat)",
+    "code": "BM-Lat #3",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": true,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      -0.51,
+      0.113,
+      -0.295,
+      -0.492,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_4",
+    "name": "Lateral Cajonero Der. (BM-Lat)",
+    "code": "BM-Lat #4",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": true,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      -0.087,
+      0.113,
+      -0.295,
+      -0.069,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_5",
+    "name": "Lateral Divisorio Der. (BM-Lat)",
+    "code": "BM-Lat #5",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": true,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      -0.069,
+      0.113,
+      -0.295,
+      -0.051,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "lat_6",
+    "name": "Lateral Derecho Extremo (BM-Lat)",
+    "code": "BM-Lat #6",
+    "layer": "Layer_Laterales",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 0,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      18.0,
+      767.0,
+      558.0
+    ],
+    "cut_dims": "767 × 558 × 18 mm",
+    "tbox": [
+      0.929,
+      0.113,
+      -0.295,
+      0.947,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "est_izq",
+    "name": "Estante Módulo Izquierdo (BM-2-Estante)",
+    "code": "BM-2-Estante",
+    "layer": "Layer_Estantes",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco2",
+    "edges": "0,0,0,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      406.0,
+      18.0,
+      543.0
+    ],
+    "cut_dims": "543 × 406 × 18 mm",
+    "tbox": [
+      -0.934,
+      0.474,
+      -0.295,
+      -0.528,
+      0.492,
+      0.248
+    ]
+  },
+  {
+    "id": "est_der",
+    "name": "Estante Módulo Derecho (BM-1Estante)",
+    "code": "BM-1Estante",
+    "layer": "Layer_Estantes",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco1",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      980.0,
+      18.0,
+      540.0
+    ],
+    "cut_dims": "980 × 540 × 18 mm",
+    "tbox": [
+      -0.051,
+      0.474,
+      -0.295,
+      0.929,
+      0.492,
+      0.245
+    ]
+  },
+  {
+    "id": "faja_frontal",
+    "name": "Faja Frontal Superior (BM-1FajaFrontal)",
+    "code": "BM-1FajaFrontal",
+    "layer": "Layer_Fajas",
+    "zone": "casco",
+    "mat": "sauco",
+    "orig_mat": "212BAR Sauco",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      1296.8,
+      60.0,
+      18.0
+    ],
+    "cut_dims": "1297 × 60 × 18 mm",
+    "tbox": [
+      -0.935,
+      0.82,
+      0.245,
+      0.3618,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "faja_tras_izq",
+    "name": "Faja Trasera Izquierda (BM-2Faja)",
+    "code": "BM-2Faja",
+    "layer": "Layer_Fajas",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Melamina (SketchUp Default)",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      407.0,
+      80.0,
+      18.0
+    ],
+    "cut_dims": "407 × 80 × 18 mm",
+    "tbox": [
+      -0.935,
+      0.8,
+      -0.295,
+      -0.528,
+      0.88,
+      -0.277
+    ]
+  },
+  {
+    "id": "faja_tras_caj",
+    "name": "Faja Trasera Cajonero (BM-CAJ-Faja)",
+    "code": "BM-CAJ-Faja",
+    "layer": "Layer_Fajas",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Melamina (SketchUp Default)",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      405.0,
+      80.0,
+      18.0
+    ],
+    "cut_dims": "405 × 80 × 18 mm",
+    "tbox": [
+      -0.492,
+      0.8,
+      -0.295,
+      -0.087,
+      0.88,
+      -0.277
+    ]
+  },
+  {
+    "id": "faja_tras_der",
+    "name": "Faja Trasera Derecha (BM-2-Faja)",
+    "code": "BM-2-Faja",
+    "layer": "Layer_Fajas",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Melamina (SketchUp Default)",
+    "edges": "0,1,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      980.0,
+      80.0,
+      18.0
+    ],
+    "cut_dims": "980 × 80 × 18 mm",
+    "tbox": [
+      -0.051,
+      0.8,
+      -0.295,
+      0.929,
+      0.88,
+      -0.277
+    ]
+  },
+  {
+    "id": "puerta_izq",
+    "name": "Puerta Batiente Izquierda (BM-Puerta)",
+    "code": "BM-Puerta",
+    "layer": "Layer_Puertas",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural",
+    "edges": "1,1,1,1",
+    "uv_rot": 0,
+    "notched": false,
+    "anim": {
+      "type": "door_left",
+      "group": "puerta_izq",
+      "angle": -1.35
+    },
+    "mm_dims": [
+      439.0,
+      772.0,
+      18.0
+    ],
+    "cut_dims": "772 × 439 × 18 mm",
+    "tbox": [
+      -0.95,
+      0.098,
+      0.263,
+      -0.511,
+      0.87,
+      0.281
+    ]
+  },
+  {
+    "id": "puerta_der",
+    "name": "Puerta Batiente Central-Der. (BM-Puerta#1)",
+    "code": "BM-Puerta#1",
+    "layer": "Layer_Puertas",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural",
+    "edges": "1,1,1,1",
+    "uv_rot": 0,
+    "notched": false,
+    "anim": {
+      "type": "door_right",
+      "group": "puerta_der",
+      "angle": 1.35
+    },
+    "mm_dims": [
+      439.0,
+      772.0,
+      18.0
+    ],
+    "cut_dims": "772 × 439 × 18 mm",
+    "tbox": [
+      -0.068,
+      0.098,
+      0.263,
+      0.371,
+      0.87,
+      0.281
+    ]
+  },
+  {
+    "id": "puerta_ciega",
+    "name": "Paño Fijo / Puerta Ciega Rincón (BM-PuertaCiega)",
+    "code": "BM-PuertaCiega",
+    "layer": "Layer_Laterales",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural",
+    "edges": "1,0,0,0",
+    "uv_rot": 0,
+    "notched": false,
+    "anim": null,
+    "mm_dims": [
+      567.2,
+      767.0,
+      18.0
+    ],
+    "cut_dims": "767 × 567 × 18 mm",
+    "tbox": [
+      0.3618,
+      0.113,
+      0.245,
+      0.929,
+      0.88,
+      0.263
+    ]
+  },
+  {
+    "id": "caj3_frente",
+    "name": "Tapa Cajón Superior (BM-3CAJ-Puerta)",
+    "code": "BM-3CAJ-Puerta",
+    "layer": "Layer_Puertas",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural2",
+    "edges": "1,1,1,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      439.0,
+      190.0,
+      18.0
+    ],
+    "cut_dims": "439 × 190 × 18 mm",
+    "tbox": [
+      -0.509,
+      0.68,
+      0.263,
+      -0.07,
+      0.87,
+      0.281
+    ]
+  },
+  {
+    "id": "caj3_lat_izq",
+    "name": "Lateral Izq. Cajón Sup. (BM-3CAJ-Lat)",
+    "code": "BM-3CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-3CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      18.0,
+      100.0,
+      500.0
+    ],
+    "cut_dims": "500 × 100 × 18 mm",
+    "tbox": [
+      -0.478,
+      0.71,
+      -0.237,
+      -0.46,
+      0.81,
+      0.263
+    ]
+  },
+  {
+    "id": "caj3_lat_der",
+    "name": "Lateral Der. Cajón Sup. (BM-3CAJ-Lat)",
+    "code": "BM-3CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-3CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      18.0,
+      100.0,
+      500.0
+    ],
+    "cut_dims": "500 × 100 × 18 mm",
+    "tbox": [
+      -0.119,
+      0.71,
+      -0.237,
+      -0.101,
+      0.81,
+      0.263
+    ]
+  },
+  {
+    "id": "caj3_cf_tras",
+    "name": "Contrafrente Trasero Cajón Sup. (BM-3CAJ-Frente)",
+    "code": "BM-3CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-3CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      341.0,
+      100.0,
+      18.0
+    ],
+    "cut_dims": "341 × 100 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.71,
+      -0.237,
+      -0.119,
+      0.81,
+      -0.219
+    ]
+  },
+  {
+    "id": "caj3_cf_del",
+    "name": "Contrafrente Delantero Cajón Sup. (BM-3CAJ-Frente)",
+    "code": "BM-3CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-3CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      341.0,
+      100.0,
+      18.0
+    ],
+    "cut_dims": "341 × 100 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.71,
+      0.245,
+      -0.119,
+      0.81,
+      0.263
+    ]
+  },
+  {
+    "id": "caj3_fondo",
+    "name": "Fondo 3mm Cajón Sup. (BM-FondoCAJ)",
+    "code": "BM-FondoCAJ",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Plus 3mm Blanco",
+    "edges": "0,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_sup",
+      "dist": 0.14
+    },
+    "mm_dims": [
+      372.0,
+      3.0,
+      495.0
+    ],
+    "cut_dims": "495 × 372 × 3 mm",
+    "tbox": [
+      -0.475,
+      0.707,
+      -0.234,
+      -0.103,
+      0.71,
+      0.261
+    ]
+  },
+  {
+    "id": "caj2_frente",
+    "name": "Tapa Cajón Medio (BM-2CAJ-Puerta)",
+    "code": "BM-2CAJ-Puerta",
+    "layer": "Layer_Puertas",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural1",
+    "edges": "1,1,1,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      439.0,
+      191.0,
+      18.0
+    ],
+    "cut_dims": "439 × 191 × 18 mm",
+    "tbox": [
+      -0.509,
+      0.486,
+      0.263,
+      -0.07,
+      0.677,
+      0.281
+    ]
+  },
+  {
+    "id": "caj2_lat_izq",
+    "name": "Lateral Izq. Cajón Medio (BM-2CAJ-Lat)",
+    "code": "BM-2CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-2CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      18.0,
+      166.0,
+      500.0
+    ],
+    "cut_dims": "500 × 166 × 18 mm",
+    "tbox": [
+      -0.478,
+      0.496,
+      -0.237,
+      -0.46,
+      0.662,
+      0.263
+    ]
+  },
+  {
+    "id": "caj2_lat_der",
+    "name": "Lateral Der. Cajón Medio (BM-2CAJ-Lat)",
+    "code": "BM-2CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-2CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      18.0,
+      166.0,
+      500.0
+    ],
+    "cut_dims": "500 × 166 × 18 mm",
+    "tbox": [
+      -0.119,
+      0.496,
+      -0.237,
+      -0.101,
+      0.662,
+      0.263
+    ]
+  },
+  {
+    "id": "caj2_cf_tras",
+    "name": "Contrafrente Trasero Cajón Medio (BM-2CAJ-Frente)",
+    "code": "BM-2CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-2CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      341.0,
+      166.0,
+      18.0
+    ],
+    "cut_dims": "341 × 166 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.496,
+      -0.237,
+      -0.119,
+      0.662,
+      -0.219
+    ]
+  },
+  {
+    "id": "caj2_cf_del",
+    "name": "Contrafrente Delantero Cajón Medio (BM-2CAJ-Frente)",
+    "code": "BM-2CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-2CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      341.0,
+      166.0,
+      18.0
+    ],
+    "cut_dims": "341 × 166 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.496,
+      0.245,
+      -0.119,
+      0.662,
+      0.263
+    ]
+  },
+  {
+    "id": "caj2_fondo",
+    "name": "Fondo 3mm Cajón Medio (BM-FondoCAJ)",
+    "code": "BM-FondoCAJ",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Plus 3mm Blanco",
+    "edges": "0,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_med",
+      "dist": 0.24
+    },
+    "mm_dims": [
+      372.0,
+      3.0,
+      495.0
+    ],
+    "cut_dims": "495 × 372 × 3 mm",
+    "tbox": [
+      -0.475,
+      0.493,
+      -0.234,
+      -0.103,
+      0.496,
+      0.261
+    ]
+  },
+  {
+    "id": "caj1_frente",
+    "name": "Tapa Cajón Cacerolero Inf. (BM-1CAJ-Puerta)",
+    "code": "BM-1CAJ-Puerta",
+    "layer": "Layer_Puertas",
+    "zone": "frentes",
+    "mat": "roble_kendal_nat",
+    "orig_mat": "H3170 ST12 Roble Kendal natural3",
+    "edges": "1,1,1,1",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      439.0,
+      385.0,
+      18.0
+    ],
+    "cut_dims": "439 × 385 × 18 mm",
+    "tbox": [
+      -0.509,
+      0.098,
+      0.263,
+      -0.07,
+      0.483,
+      0.281
+    ]
+  },
+  {
+    "id": "caj1_lat_izq",
+    "name": "Lateral Izq. Cacerolero Inf. (BM-1CAJ-Lat)",
+    "code": "BM-1CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-1CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      18.0,
+      290.0,
+      500.0
+    ],
+    "cut_dims": "500 × 290 × 18 mm",
+    "tbox": [
+      -0.478,
+      0.13,
+      -0.237,
+      -0.46,
+      0.42,
+      0.263
+    ]
+  },
+  {
+    "id": "caj1_lat_der",
+    "name": "Lateral Der. Cacerolero Inf. (BM-1CAJ-Lat)",
+    "code": "BM-1CAJ-Lat",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-1CAJ-Lat)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      18.0,
+      290.0,
+      500.0
+    ],
+    "cut_dims": "500 × 290 × 18 mm",
+    "tbox": [
+      -0.119,
+      0.13,
+      -0.237,
+      -0.101,
+      0.42,
+      0.263
+    ]
+  },
+  {
+    "id": "caj1_cf_tras",
+    "name": "Contrafrente Trasero Cacerolero Inf. (BM-1CAJ-Frente)",
+    "code": "BM-1CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-1CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      341.0,
+      290.0,
+      18.0
+    ],
+    "cut_dims": "341 × 290 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.13,
+      -0.237,
+      -0.119,
+      0.42,
+      -0.219
+    ]
+  },
+  {
+    "id": "caj1_cf_del",
+    "name": "Contrafrente Delantero Cacerolero Inf. (BM-1CAJ-Frente)",
+    "code": "BM-1CAJ-Frente",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Blanco Cajón (BM-1CAJ-Frente)",
+    "edges": "1,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      341.0,
+      290.0,
+      18.0
+    ],
+    "cut_dims": "341 × 290 × 18 mm",
+    "tbox": [
+      -0.46,
+      0.13,
+      0.245,
+      -0.119,
+      0.42,
+      0.263
+    ]
+  },
+  {
+    "id": "caj1_fondo",
+    "name": "Fondo 3mm Cacerolero Inf. (BM-FondoCAJ)",
+    "code": "BM-FondoCAJ",
+    "layer": "Layer_Cajones",
+    "zone": "interior_blanco",
+    "mat": "blanco_cajon",
+    "orig_mat": "Plus 3mm Blanco",
+    "edges": "0,0,0,0",
+    "uv_rot": 90,
+    "notched": false,
+    "anim": {
+      "type": "drawer",
+      "group": "cajon_inf",
+      "dist": 0.35
+    },
+    "mm_dims": [
+      372.0,
+      3.0,
+      495.0
+    ],
+    "cut_dims": "495 × 372 × 3 mm",
+    "tbox": [
+      -0.475,
+      0.127,
+      -0.234,
+      -0.103,
+      0.13,
+      0.261
+    ]
+  }
+]

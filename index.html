@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Sebas Cocina · Showroom 3D Interactivo (2 Muebles a 4m · Greige & Calacatta 120×60)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-glass: rgba(20, 21, 24, 0.84);
+      --bg-glass-strong: rgba(15, 16, 19, 0.94);
+      --bg-card: rgba(255, 255, 255, 0.06);
+      --bg-card-hover: rgba(255, 255, 255, 0.11);
+      --border-subtle: rgba(255, 255, 255, 0.13);
+      --border-focus: rgba(209, 154, 102, 0.75);
+      --text-main: #F7F5F0;
+      --text-muted: #A7A29A;
+      --accent-amber: #D19A66;
+      --accent-amber-soft: rgba(209, 154, 102, 0.20);
+      --accent-green: #4ADE80;
+      --accent-blue: #60A5FA;
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --shadow-soft: 0 16px 38px rgba(0, 0, 0, 0.45);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #bfb8ac;
+      font-family: var(--font-sans);
+      color: var(--text-main);
+    }
+
+    #canvas-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* TOP NAVIGATION BAR */
+    .top-bar {
+      position: fixed;
+      top: 12px;
+      left: 14px;
+      right: 14px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      pointer-events: none;
+      flex-wrap: wrap;
+    }
+
+    .brand-pill {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      padding: 8px 14px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 10px var(--accent-amber);
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* DISPLACEMENT / MUEBLE SWITCHER PILL */
+    .nav-pills {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      padding: 5px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      padding: 6px 11px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .nav-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+
+    .nav-btn.active {
+      color: #161310;
+      background: var(--accent-amber);
+      border-color: var(--accent-amber);
+      box-shadow: 0 2px 10px rgba(209, 154, 102, 0.35);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 18px;
+      background: var(--border-subtle);
+      margin: 0 2px;
+    }
+
+    .top-actions {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .action-btn {
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 7px 12px;
+      border-radius: var(--radius-md);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: var(--shadow-soft);
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .action-btn:hover {
+      background: var(--bg-glass-strong);
+      border-color: var(--border-focus);
+    }
+
+    .action-btn.active-toggle {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: #FFD29D;
+    }
+
+    /* LEFT FLOATING CARD: SELECTED PIECE / BUTTONS INSPECTOR */
+    .left-card {
+      position: fixed;
+      top: 68px;
+      left: 14px;
+      width: 310px;
+      max-height: calc(100vh - 140px);
+      z-index: 18;
+      background: var(--bg-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .badge-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--accent-amber-soft);
+      color: #F5C28B;
+      border: 1px solid rgba(209, 154, 102, 0.35);
+    }
+
+    .piece-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-main);
+    }
+
+    .piece-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .spec-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 7px 9px;
+    }
+
+    .spec-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .spec-val {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* INTERACTIVE MODULE BUTTONS GRID IN LEFT PANEL */
+    .interactive-buttons-box {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 9px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    .mod-btn {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 6px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.16s ease;
+    }
+
+    .mod-btn:hover {
+      background: rgba(209, 154, 102, 0.18);
+      border-color: var(--accent-amber);
+    }
+
+    .mod-btn.is-open {
+      background: rgba(74, 222, 128, 0.16);
+      border-color: rgba(74, 222, 128, 0.55);
+      color: #B8F7CC;
+    }
+
+    .mod-btn span.state-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .mod-btn.is-open span.state-dot {
+      background: var(--accent-green);
+      box-shadow: 0 0 6px var(--accent-green);
+    }
+
+    /* RIGHT DRAWER: MATERIAL CUSTOMIZER */
+    .right-panel {
+      position: fixed;
+      top: 68px;
+      right: 14px;
+      bottom: 68px;
+      width: 335px;
+      z-index: 19;
+      background: var(--bg-glass);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    .right-panel.collapsed {
+      transform: translateX(360px);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .panel-top {
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .panel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    .target-scope-row {
+      display: flex;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.28);
+      padding: 3px;
+      border-radius: 8px;
+    }
+
+    .scope-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 5px 6px;
+      border-radius: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .scope-btn.active {
+      background: var(--accent-amber);
+      color: #161310;
+    }
+
+    .zone-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .zone-tab {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 4px;
+      border-radius: 7px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .zone-tab.active {
+      background: var(--accent-amber-soft);
+      border-color: var(--accent-amber);
+      color: #FFD29D;
+    }
+
+    .filter-row {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .filter-chip {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: var(--text-main);
+      color: #141413;
+      border-color: var(--text-main);
+    }
+
+    .swatches-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .swatch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9px;
+      padding: 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.16s ease;
+    }
+
+    .swatch-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.28);
+    }
+
+    .swatch-card.selected {
+      border-color: var(--accent-amber);
+      background: var(--accent-amber-soft);
+    }
+
+    .swatch-preview {
+      width: 100%;
+      height: 44px;
+      border-radius: 6px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .swatch-name {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .swatch-brand {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* BOTTOM CAMERA / DISPLACEMENT BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 10px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      max-width: 96vw;
+      overflow-x: auto;
+    }
+
+    .cam-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .cam-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-card-hover);
+    }
+
+    .cam-btn.active {
+      background: rgba(209, 154, 102, 0.22);
+      border-color: var(--accent-amber);
+      color: #FFD29D;
+    }
+
+    /* 3D INTERACTIVE HOTSPOT BUTTONS OVERLAY */
+    #hotspots-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 12;
+      overflow: hidden;
+    }
+
+    .hotspot-3d {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(18, 19, 23, 0.86);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #F7F5F0;
+      border: 1.5px solid rgba(209, 154, 102, 0.85);
+      border-radius: 999px;
+      padding: 4px 9px 4px 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .hotspot-3d:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: rgba(209, 154, 102, 0.95);
+      color: #141210;
+      border-color: #FFF;
+      z-index: 30;
+    }
+
+    .hotspot-3d.is-open {
+      border-color: #4ADE80;
+      background: rgba(20, 42, 28, 0.90);
+      color: #D1FAE5;
+    }
+
+    .hotspot-3d .hs-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      color: #141210;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .hotspot-3d.is-open .hs-icon {
+      background: #4ADE80;
+      color: #0B2614;
+    }
+
+    .hotspot-unit-header {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      background: rgba(16, 17, 20, 0.90);
+      border: 1.5px solid var(--accent-amber);
+      color: #F7F5F0;
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
+
+    .hotspot-unit-header:hover {
+      background: var(--accent-amber);
+      color: #141210;
+    }
+
+    .hotspot-distance-badge {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      pointer-events: auto;
+      background: rgba(25, 27, 32, 0.85);
+      border: 1px dashed rgba(209, 154, 102, 0.75);
+      color: #FFD29D;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .left-card {
+        width: 260px;
+        top: auto;
+        bottom: 62px;
+        max-height: 40vh;
+      }
+      .right-panel {
+        width: 290px;
+      }
+    }
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="hotspots-layer"></div>
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="top-bar">
+    <div class="brand-pill">
+      <div class="brand-dot"></div>
+      <div>
+        <div class="brand-title">Sebas Cocina · Showroom 3D</div>
+        <div class="brand-sub">sebasCocina.skp · 2 Muebles a 4.00m · Piso Calacatta 120×60</div>
+      </div>
+    </div>
+
+    <div class="nav-pills" role="navigation" aria-label="Desplazamiento entre muebles">
+      <button class="nav-btn active" id="btn-go-m1" onclick="window.moveToUnit(1)">
+        <span>Mueble 1 (0.00m)</span>
+      </button>
+      <button class="nav-btn" id="btn-go-both" onclick="window.moveToBothUnits()">
+        <span>↔ Vista Ambos (4.00m)</span>
+      </button>
+      <button class="nav-btn" id="btn-go-m2" onclick="window.moveToUnit(2)">
+        <span>Mueble 2 (+4.00m Der.)</span>
+      </button>
+      <div class="nav-divider"></div>
+      <button class="nav-btn" onclick="window.stepCameraX(-1.0)" title="Desplazar cámara 1m a la izquierda">◀ -1m</button>
+      <button class="nav-btn" onclick="window.stepCameraX(1.0)" title="Desplazar cámara 1m a la derecha">+1m ▶</button>
+    </div>
+
+    <div class="top-actions">
+      <button class="action-btn" id="btn-open-all" onclick="window.toggleAllOpen()">
+        <span>Abrir Puertas y Cajones</span>
+      </button>
+      <button class="action-btn" id="btn-toggle-mesada" onclick="window.toggleCountertop()">
+        <span>Ver Sin Mesada (Encastre)</span>
+      </button>
+      <button class="action-btn active-toggle" id="btn-toggle-hotspots" onclick="window.toggleHotspots()">
+        <span>Botones 3D: ON</span>
+      </button>
+      <button class="action-btn" id="btn-toggle-customizer" onclick="window.toggleRightPanel()">
+        <span>Colores y Melaminas</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- LEFT INSPECTOR & INTERACTIVE CONTROLS -->
+  <aside class="left-card" id="inspector-card">
+    <div class="card-header">
+      <span class="badge-tag" id="insp-badge">MUEBLE 1 · PRINCIPAL</span>
+      <span style="font-family:var(--font-mono);font-size:10.5px;color:var(--text-muted);" id="insp-code">sebasCocina.skp</span>
+    </div>
+    <div class="piece-title" id="insp-title">Bajo Mesada Completo (38 Piezas)</div>
+    <div class="piece-subtitle" id="insp-desc">
+      Haz clic sobre cualquier placa o en los botones interactuables flotantes para abrir puertas, deslizar los 3 cajones escalonados o desplazarte 4 metros hacia el Mueble 2.
+    </div>
+
+    <div class="specs-grid">
+      <div class="spec-box">
+        <div class="spec-label">Medida Corte</div>
+        <div class="spec-val" id="insp-dims">1906 × 600 × 900 mm</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Material Activo</div>
+        <div class="spec-val" id="insp-mat">Roble Kendal / Sauco</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Habitación</div>
+        <div class="spec-val">Greige + Zócalo Madera</div>
+      </div>
+      <div class="spec-box">
+        <div class="spec-label">Piso Porcelanato</div>
+        <div class="spec-val">Calacatta 120×60 cm</div>
+      </div>
+    </div>
+
+    <div class="interactive-buttons-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:var(--text-muted);letter-spacing:0.04em;" id="unit-ctrl-label">
+          Botones Interactivos · Mueble 1
+        </span>
+        <button class="filter-chip" onclick="window.switchActiveUnit()" id="btn-switch-unit-ctrl">Cambiar a Mueble 2</button>
+      </div>
+      <div class="interactive-grid">
+        <button class="mod-btn" id="ctrl-puerta_izq" onclick="window.triggerGroup(window.activeUnitId, 'puerta_izq')">
+          <span>Puerta Izq.</span><span class="state-dot"></span>
+        </button>
+        <button class="mod-btn" id="ctrl-puerta_der" onclick="window.triggerGroup(window.activeUnitId, 'puerta_der')">
+          <span>Puerta Der.</span><span class="state-dot"></span>
+        </button>
+        <button class="mod-btn" id="ctrl-cajon_sup" onclick="window.triggerGroup(window.activeUnitId, 'cajon_sup')">
+          <span>1° Cajón Sup.</span><span class="state-dot"></span>
+        </button>
+        <button class="mod-btn" id="ctrl-cajon_med" onclick="window.triggerGroup(window.activeUnitId, 'cajon_med')">
+          <span>2° Cajón Med.</span><span class="state-dot"></span>
+        </button>
+        <button class="mod-btn" id="ctrl-cajon_inf" onclick="window.triggerGroup(window.activeUnitId, 'cajon_inf')" style="grid-column: span 2;">
+          <span>3° Cajón Cacerolero Inferior (350 mm)</span><span class="state-dot"></span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: MELAMINA & COLOR CUSTOMIZER -->
+  <aside class="right-panel" id="right-panel">
+    <div class="panel-top">
+      <div class="panel-title-row">
+        <span class="panel-title">Combinador de Melaminas (.skm)</span>
+        <button class="filter-chip" onclick="window.resetOriginalMaterials()">Restaurar Original</button>
+      </div>
+
+      <div class="target-scope-row">
+        <button class="scope-btn active" id="scope-both" onclick="window.setCustomScope('both')">Ambos Muebles + Zócalo</button>
+        <button class="scope-btn" id="scope-m1" onclick="window.setCustomScope('1')">Solo Mueble 1</button>
+        <button class="scope-btn" id="scope-m2" onclick="window.setCustomScope('2')">Solo Mueble 2</button>
+      </div>
+
+      <div class="zone-tabs">
+        <button class="zone-tab active" data-zone="frentes" onclick="window.selectZone('frentes')">Frentes y Zócalo Hab.</button>
+        <button class="zone-tab" data-zone="casco" onclick="window.selectZone('casco')">Casco / Interior</button>
+        <button class="zone-tab" data-zone="mesada" onclick="window.selectZone('mesada')">Mesada + Base Caj.</button>
+        <button class="zone-tab" data-zone="zocalo" onclick="window.selectZone('zocalo')">Zócalo Mueble</button>
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-chip active" data-filter="all" onclick="window.filterSwatches('all')">Todas (28)</button>
+        <button class="filter-chip" data-filter="Maderas" onclick="window.filterSwatches('Maderas')">Maderas</button>
+        <button class="filter-chip" data-filter="Piedras y Metales" onclick="window.filterSwatches('Piedras y Metales')">Piedras / Metales</button>
+        <button class="filter-chip" data-filter="Lisas y Neutros" onclick="window.filterSwatches('Lisas y Neutros')">Lisas</button>
+      </div>
+    </div>
+
+    <div class="swatches-scroll" id="swatches-container"></div>
+  </aside>
+
+  <!-- BOTTOM CAMERA PRESETS (MATCHING SKETCHUP SCREENSHOTS) -->
+  <nav class="bottom-bar" aria-label="Vistas de cámara">
+    <button class="cam-btn active" id="cam-front" onclick="window.setCameraView('front')">Vista Frontal Cerrada</button>
+    <button class="cam-btn" id="cam-open-step" onclick="window.setCameraView('open_step')">Vista Abierta Escalonada (Foto 1)</button>
+    <button class="cam-btn" id="cam-corner" onclick="window.setCameraView('corner')">Lateral Derecho / Rincón (Foto 3)</button>
+    <button class="cam-btn" id="cam-top-nofull" onclick="window.setCameraView('top_encastre')">Sin Mesada / Encastre (Foto 5)</button>
+    <button class="cam-btn" id="cam-back" onclick="window.setCameraView('back')">Vista Trasera Interior (Foto 4)</button>
+    <button class="cam-btn" id="cam-both" onclick="window.moveToBothUnits()">Recorrido 2 Muebles (4.00m)</button>
+  </nav>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    const CATALOG = [{"id": "roble_kendal_nat", "skm_file": "026_Roble Kendal natural.skm", "name": "H3170 ST12 Roble Kendal Natural", "category": "Madera", "hex": "#bca081", "roughness": 0.55, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_roble_kendal_nat.jpg"}, {"id": "sauco", "skm_file": "064_Sauco.skm", "name": "212BAR Sauco", "category": "Madera Oscura", "hex": "#3b3b3b", "roughness": 0.6, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_sauco.jpg"}, {"id": "amberes", "skm_file": "148_Amberes.skm", "name": "058DMT Amberes", "category": "Piedra / Mesada", "hex": "#3b3a3f", "roughness": 0.42, "metalness": 0.08, "has_texture": true, "tex_path": "assets/textures/tex_amberes.jpg"}, {"id": "chromix_plata", "skm_file": "144_Chromix plata.skm", "name": "F638 ST10 Chromix Plata", "category": "Metal / Piedra", "hex": "#a29994", "roughness": 0.38, "metalness": 0.35, "has_texture": true, "tex_path": "assets/textures/tex_chromix_plata.jpg"}, {"id": "paraiso", "skm_file": "022_Paraíso.skm", "name": "218MES Paraíso", "category": "Madera", "hex": "#c9a680", "roughness": 0.52, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_paraiso.jpg"}, {"id": "blanco_w954", "skm_file": "073_Blanco.skm", "name": "W954 Blanco", "category": "Liso", "hex": "#fdfdf5", "roughness": 0.4, "metalness": 0.02, "has_texture": false, "tex_path": null}, {"id": "venezia", "skm_file": "002_Venezia.skm", "name": "160NAT Venezia", "category": "Madera Clara", "hex": "#eee9e1", "roughness": 0.55, "metalness": 0.04, "has_texture": true, "tex_path": "assets/textures/tex_venezia.jpg"}, {"id": "olmo_finlandes", "skm_file": "036_Olmo Finlandés.skm", "name": "096NOR Olmo Finlandés", "category": "Madera", "hex": "#b7845b", "roughness": 0.55, "metalness": 0.04, "has_texture": true, "tex_path": "assets/textures/tex_olmo_finlandes.jpg"}, {"id": "scotch", "skm_file": "034_Scotch.skm", "name": "142BAR Scotch", "category": "Madera", "hex": "#a98c70", "roughness": 0.55, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_scotch.jpg"}, {"id": "roble_kendal_enc", "skm_file": "033_Roble Kendal encerado.skm", "name": "H3171 ST12 Roble Kendal Encerado", "category": "Madera", "hex": "#b58f65", "roughness": 0.52, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_roble_kendal_enc.jpg"}, {"id": "merlot", "skm_file": "061_Merlot.skm", "name": "141BAR Merlot", "category": "Madera Oscura", "hex": "#4c3c35", "roughness": 0.55, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_merlot.jpg"}, {"id": "blanco_nature", "skm_file": "001_Blanco Nature.skm", "name": "135NAT Blanco Nature", "category": "Madera Clara", "hex": "#faf8f7", "roughness": 0.58, "metalness": 0.03, "has_texture": true, "tex_path": "assets/textures/tex_blanco_nature.jpg"}, {"id": "roble_escandinavo", "skm_file": "011_Roble Escandinavo.skm", "name": "011 Roble Escandinavo", "category": "Madera Clara", "hex": "#c8b9a2", "roughness": 0.54, "metalness": 0.04, "has_texture": true, "tex_path": "assets/textures/tex_roble_escandinavo.jpg"}, {"id": "roble_halifax", "skm_file": "031_Roble Halifax natural.skm", "name": "H1180 Roble Halifax Natural", "category": "Madera", "hex": "#b59570", "roughness": 0.62, "metalness": 0.05, "has_texture": true, "tex_path": "assets/textures/tex_roble_halifax.jpg"}, {"id": "petiribi", "skm_file": "045_Petiribí.skm", "name": "045 Petiribí", "category": "Madera", "hex": "#896c3e", "roughness": 0.52, "metalness": 0.06, "has_texture": true, "tex_path": "assets/textures/tex_petiribi.jpg"}, {"id": "nogal_lincoln", "skm_file": "053_Nogal Lincoln.skm", "name": "H1714 Nogal Lincoln", "category": "Madera Oscura", "hex": "#734f34", "roughness": 0.5, "metalness": 0.06, "has_texture": true, "tex_path": "assets/textures/tex_nogal_lincoln.jpg"}, {"id": "roble_termo_negro", "skm_file": "065_Roble termo negro.skm", "name": "H1199 Roble Termo Negro", "category": "Madera Oscura", "hex": "#2e2119", "roughness": 0.6, "metalness": 0.08, "has_texture": true, "tex_path": "assets/textures/tex_roble_termo_negro.jpg"}, {"id": "white_gloss", "skm_file": "076_White Extreme Gloss.skm", "name": "076 White Extreme Gloss", "category": "Liso Brillante", "hex": "#f7f7f7", "roughness": 0.12, "metalness": 0.1, "has_texture": true, "tex_path": "assets/textures/tex_white_gloss.jpg"}, {"id": "gris_cachemira", "skm_file": "080_Gris Cachemira ST9.skm", "name": "U702 ST9 Gris Cachemira", "category": "Liso Mate", "hex": "#d8cabd", "roughness": 0.65, "metalness": 0.02, "has_texture": false, "tex_path": null}, {"id": "gris_basalto", "skm_file": "096_Gris Basalto.skm", "name": "096 Gris Basalto", "category": "Liso Mate", "hex": "#939592", "roughness": 0.65, "metalness": 0.03, "has_texture": true, "tex_path": "assets/textures/tex_gris_basalto.jpg"}, {"id": "verde_mineral", "skm_file": "106_Verde Mineral.skm", "name": "106 Verde Mineral", "category": "Liso Mate", "hex": "#526261", "roughness": 0.65, "metalness": 0.03, "has_texture": false, "tex_path": null}, {"id": "grafito", "skm_file": "110_Grafito.skm", "name": "U961 Grafito", "category": "Liso Mate", "hex": "#4d4d4d", "roughness": 0.68, "metalness": 0.04, "has_texture": true, "tex_path": "assets/textures/tex_grafito.jpg"}, {"id": "black_matt", "skm_file": "115_Black Extreme Matt.skm", "name": "115 Black Extreme Matt", "category": "Liso Supermate", "hex": "#313737", "roughness": 0.82, "metalness": 0.03, "has_texture": false, "tex_path": null}, {"id": "lino_chiaro", "skm_file": "127_Lino Chiaro.skm", "name": "127 Textil Lino Chiaro", "category": "Textil", "hex": "#e1dad3", "roughness": 0.75, "metalness": 0.02, "has_texture": true, "tex_path": "assets/textures/tex_lino_chiaro.jpg"}, {"id": "travertino", "skm_file": "139_Travertino.skm", "name": "139 Piedra Travertino", "category": "Piedra / Mesada", "hex": "#e0d8c5", "roughness": 0.38, "metalness": 0.08, "has_texture": true, "tex_path": "assets/textures/tex_travertino.jpg"}, {"id": "hormigon_chicago", "skm_file": "147_Hormigón Chicago gris oscuro.skm", "name": "F187 Hormigón Chicago Oscuro", "category": "Piedra / Mesada", "hex": "#605448", "roughness": 0.48, "metalness": 0.08, "has_texture": true, "tex_path": "assets/textures/tex_hormigon_chicago.jpg"}, {"id": "pietra_grigia", "skm_file": "149_Pietra Grigia negro.skm", "name": "F206 Pietra Grigia Negro", "category": "Piedra / Mesada", "hex": "#322e2f", "roughness": 0.25, "metalness": 0.12, "has_texture": true, "tex_path": "assets/textures/tex_pietra_grigia.jpg"}, {"id": "metal_oro", "skm_file": "151_Metal cepillado oro.skm", "name": "151 Metal Cepillado Oro", "category": "Metal / Herraje", "hex": "#c49e6d", "roughness": 0.28, "metalness": 0.75, "has_texture": true, "tex_path": "assets/textures/tex_metal_oro.jpg"}];
+    const PIECES_DATA = [{"id": "mesada", "name": "Mesada Superior (Grupo#73)", "code": "Grupo#73", "layer": "Layer_Mesada y zocalo", "zone": "mesada", "mat": "amberes", "orig_mat": "058DMT Amberes", "edges": "0,1,0,1", "uv_rot": 0, "notched": false, "anim": null, "mm_dims": [1906.0, 20.0, 600.0], "cut_dims": "1906 × 600 × 20 mm", "tbox": [-0.953, 0.88, -0.3, 0.953, 0.9, 0.3]}, {"id": "zocalo", "name": "Zócalo Frontal Recedido (Grupo#74)", "code": "Grupo#74", "layer": "Layer_Mesada y zocalo", "zone": "zocalo", "mat": "chromix_plata", "orig_mat": "F638 ST10 Chromix plata", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [1906.0, 95.0, 530.0], "cut_dims": "1906 × 530 × 95 mm", "tbox": [-0.953, 0.0, -0.3, 0.953, 0.095, 0.23]}, {"id": "base_izq", "name": "Base Módulo Izquierdo (BM-2-Base)", "code": "BM-2-Base", "layer": "Layer_Bases", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco1", "edges": "1,0,0,1", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [443.0, 18.0, 558.0], "cut_dims": "558 × 443 × 18 mm", "tbox": [-0.953, 0.095, -0.295, -0.51, 0.113, 0.263]}, {"id": "base_caj", "name": "Base Módulo Cajonero (BM-CJ-Base)", "code": "BM-CJ-Base", "layer": "Layer_Bases", "zone": "mesada", "mat": "amberes", "orig_mat": "058DMT Amberes", "edges": "0,0,0,1", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [441.0, 18.0, 558.0], "cut_dims": "558 × 441 × 18 mm", "tbox": [-0.51, 0.095, -0.295, -0.069, 0.113, 0.263]}, {"id": "base_der", "name": "Base Módulo Derecho / Rincón (BM-1Base)", "code": "BM-1Base", "layer": "Layer_Bases", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco1", "edges": "0,1,0,1", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [1016.0, 18.0, 558.0], "cut_dims": "1016 × 558 × 18 mm", "tbox": [-0.069, 0.095, -0.295, 0.947, 0.113, 0.263]}, {"id": "lat_1", "name": "Lateral Izquierdo Extremo (BM-Lat)", "code": "BM-Lat #1", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": true, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [-0.953, 0.113, -0.295, -0.935, 0.88, 0.263]}, {"id": "lat_2", "name": "Lateral Divisorio Izq. (BM-Lat)", "code": "BM-Lat #2", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": true, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [-0.528, 0.113, -0.295, -0.51, 0.88, 0.263]}, {"id": "lat_3", "name": "Lateral Cajonero Izq. (BM-Lat)", "code": "BM-Lat #3", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": true, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [-0.51, 0.113, -0.295, -0.492, 0.88, 0.263]}, {"id": "lat_4", "name": "Lateral Cajonero Der. (BM-Lat)", "code": "BM-Lat #4", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": true, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [-0.087, 0.113, -0.295, -0.069, 0.88, 0.263]}, {"id": "lat_5", "name": "Lateral Divisorio Der. (BM-Lat)", "code": "BM-Lat #5", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": true, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [-0.069, 0.113, -0.295, -0.051, 0.88, 0.263]}, {"id": "lat_6", "name": "Lateral Derecho Extremo (BM-Lat)", "code": "BM-Lat #6", "layer": "Layer_Laterales", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 0, "notched": false, "anim": null, "mm_dims": [18.0, 767.0, 558.0], "cut_dims": "767 × 558 × 18 mm", "tbox": [0.929, 0.113, -0.295, 0.947, 0.88, 0.263]}, {"id": "est_izq", "name": "Estante Módulo Izquierdo (BM-2-Estante)", "code": "BM-2-Estante", "layer": "Layer_Estantes", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco2", "edges": "0,0,0,1", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [406.0, 18.0, 543.0], "cut_dims": "543 × 406 × 18 mm", "tbox": [-0.934, 0.474, -0.295, -0.528, 0.492, 0.248]}, {"id": "est_der", "name": "Estante Módulo Derecho (BM-1Estante)", "code": "BM-1Estante", "layer": "Layer_Estantes", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco1", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [980.0, 18.0, 540.0], "cut_dims": "980 × 540 × 18 mm", "tbox": [-0.051, 0.474, -0.295, 0.929, 0.492, 0.245]}, {"id": "faja_frontal", "name": "Faja Frontal Superior (BM-1FajaFrontal)", "code": "BM-1FajaFrontal", "layer": "Layer_Fajas", "zone": "casco", "mat": "sauco", "orig_mat": "212BAR Sauco", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [1296.8, 60.0, 18.0], "cut_dims": "1297 × 60 × 18 mm", "tbox": [-0.935, 0.82, 0.245, 0.3618, 0.88, 0.263]}, {"id": "faja_tras_izq", "name": "Faja Trasera Izquierda (BM-2Faja)", "code": "BM-2Faja", "layer": "Layer_Fajas", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Melamina (SketchUp Default)", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [407.0, 80.0, 18.0], "cut_dims": "407 × 80 × 18 mm", "tbox": [-0.935, 0.8, -0.295, -0.528, 0.88, -0.277]}, {"id": "faja_tras_caj", "name": "Faja Trasera Cajonero (BM-CAJ-Faja)", "code": "BM-CAJ-Faja", "layer": "Layer_Fajas", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Melamina (SketchUp Default)", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [405.0, 80.0, 18.0], "cut_dims": "405 × 80 × 18 mm", "tbox": [-0.492, 0.8, -0.295, -0.087, 0.88, -0.277]}, {"id": "faja_tras_der", "name": "Faja Trasera Derecha (BM-2-Faja)", "code": "BM-2-Faja", "layer": "Layer_Fajas", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Melamina (SketchUp Default)", "edges": "0,1,0,0", "uv_rot": 90, "notched": false, "anim": null, "mm_dims": [980.0, 80.0, 18.0], "cut_dims": "980 × 80 × 18 mm", "tbox": [-0.051, 0.8, -0.295, 0.929, 0.88, -0.277]}, {"id": "puerta_izq", "name": "Puerta Batiente Izquierda (BM-Puerta)", "code": "BM-Puerta", "layer": "Layer_Puertas", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural", "edges": "1,1,1,1", "uv_rot": 0, "notched": false, "anim": {"type": "door_left", "group": "puerta_izq", "angle": -1.35}, "mm_dims": [439.0, 772.0, 18.0], "cut_dims": "772 × 439 × 18 mm", "tbox": [-0.95, 0.098, 0.263, -0.511, 0.87, 0.281]}, {"id": "puerta_der", "name": "Puerta Batiente Central-Der. (BM-Puerta#1)", "code": "BM-Puerta#1", "layer": "Layer_Puertas", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural", "edges": "1,1,1,1", "uv_rot": 0, "notched": false, "anim": {"type": "door_right", "group": "puerta_der", "angle": 1.35}, "mm_dims": [439.0, 772.0, 18.0], "cut_dims": "772 × 439 × 18 mm", "tbox": [-0.068, 0.098, 0.263, 0.371, 0.87, 0.281]}, {"id": "puerta_ciega", "name": "Paño Fijo / Puerta Ciega Rincón (BM-PuertaCiega)", "code": "BM-PuertaCiega", "layer": "Layer_Laterales", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural", "edges": "1,0,0,0", "uv_rot": 0, "notched": false, "anim": null, "mm_dims": [567.2, 767.0, 18.0], "cut_dims": "767 × 567 × 18 mm", "tbox": [0.3618, 0.113, 0.245, 0.929, 0.88, 0.263]}, {"id": "caj3_frente", "name": "Tapa Cajón Superior (BM-3CAJ-Puerta)", "code": "BM-3CAJ-Puerta", "layer": "Layer_Puertas", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural2", "edges": "1,1,1,1", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [439.0, 190.0, 18.0], "cut_dims": "439 × 190 × 18 mm", "tbox": [-0.509, 0.68, 0.263, -0.07, 0.87, 0.281]}, {"id": "caj3_lat_izq", "name": "Lateral Izq. Cajón Sup. (BM-3CAJ-Lat)", "code": "BM-3CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-3CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [18.0, 100.0, 500.0], "cut_dims": "500 × 100 × 18 mm", "tbox": [-0.478, 0.71, -0.237, -0.46, 0.81, 0.263]}, {"id": "caj3_lat_der", "name": "Lateral Der. Cajón Sup. (BM-3CAJ-Lat)", "code": "BM-3CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-3CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [18.0, 100.0, 500.0], "cut_dims": "500 × 100 × 18 mm", "tbox": [-0.119, 0.71, -0.237, -0.101, 0.81, 0.263]}, {"id": "caj3_cf_tras", "name": "Contrafrente Trasero Cajón Sup. (BM-3CAJ-Frente)", "code": "BM-3CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-3CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [341.0, 100.0, 18.0], "cut_dims": "341 × 100 × 18 mm", "tbox": [-0.46, 0.71, -0.237, -0.119, 0.81, -0.219]}, {"id": "caj3_cf_del", "name": "Contrafrente Delantero Cajón Sup. (BM-3CAJ-Frente)", "code": "BM-3CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-3CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [341.0, 100.0, 18.0], "cut_dims": "341 × 100 × 18 mm", "tbox": [-0.46, 0.71, 0.245, -0.119, 0.81, 0.263]}, {"id": "caj3_fondo", "name": "Fondo 3mm Cajón Sup. (BM-FondoCAJ)", "code": "BM-FondoCAJ", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Plus 3mm Blanco", "edges": "0,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_sup", "dist": 0.14}, "mm_dims": [372.0, 3.0, 495.0], "cut_dims": "495 × 372 × 3 mm", "tbox": [-0.475, 0.707, -0.234, -0.103, 0.71, 0.261]}, {"id": "caj2_frente", "name": "Tapa Cajón Medio (BM-2CAJ-Puerta)", "code": "BM-2CAJ-Puerta", "layer": "Layer_Puertas", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural1", "edges": "1,1,1,1", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [439.0, 191.0, 18.0], "cut_dims": "439 × 191 × 18 mm", "tbox": [-0.509, 0.486, 0.263, -0.07, 0.677, 0.281]}, {"id": "caj2_lat_izq", "name": "Lateral Izq. Cajón Medio (BM-2CAJ-Lat)", "code": "BM-2CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-2CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [18.0, 166.0, 500.0], "cut_dims": "500 × 166 × 18 mm", "tbox": [-0.478, 0.496, -0.237, -0.46, 0.662, 0.263]}, {"id": "caj2_lat_der", "name": "Lateral Der. Cajón Medio (BM-2CAJ-Lat)", "code": "BM-2CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-2CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [18.0, 166.0, 500.0], "cut_dims": "500 × 166 × 18 mm", "tbox": [-0.119, 0.496, -0.237, -0.101, 0.662, 0.263]}, {"id": "caj2_cf_tras", "name": "Contrafrente Trasero Cajón Medio (BM-2CAJ-Frente)", "code": "BM-2CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-2CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [341.0, 166.0, 18.0], "cut_dims": "341 × 166 × 18 mm", "tbox": [-0.46, 0.496, -0.237, -0.119, 0.662, -0.219]}, {"id": "caj2_cf_del", "name": "Contrafrente Delantero Cajón Medio (BM-2CAJ-Frente)", "code": "BM-2CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-2CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [341.0, 166.0, 18.0], "cut_dims": "341 × 166 × 18 mm", "tbox": [-0.46, 0.496, 0.245, -0.119, 0.662, 0.263]}, {"id": "caj2_fondo", "name": "Fondo 3mm Cajón Medio (BM-FondoCAJ)", "code": "BM-FondoCAJ", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Plus 3mm Blanco", "edges": "0,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_med", "dist": 0.24}, "mm_dims": [372.0, 3.0, 495.0], "cut_dims": "495 × 372 × 3 mm", "tbox": [-0.475, 0.493, -0.234, -0.103, 0.496, 0.261]}, {"id": "caj1_frente", "name": "Tapa Cajón Cacerolero Inf. (BM-1CAJ-Puerta)", "code": "BM-1CAJ-Puerta", "layer": "Layer_Puertas", "zone": "frentes", "mat": "roble_kendal_nat", "orig_mat": "H3170 ST12 Roble Kendal natural3", "edges": "1,1,1,1", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [439.0, 385.0, 18.0], "cut_dims": "439 × 385 × 18 mm", "tbox": [-0.509, 0.098, 0.263, -0.07, 0.483, 0.281]}, {"id": "caj1_lat_izq", "name": "Lateral Izq. Cacerolero Inf. (BM-1CAJ-Lat)", "code": "BM-1CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-1CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [18.0, 290.0, 500.0], "cut_dims": "500 × 290 × 18 mm", "tbox": [-0.478, 0.13, -0.237, -0.46, 0.42, 0.263]}, {"id": "caj1_lat_der", "name": "Lateral Der. Cacerolero Inf. (BM-1CAJ-Lat)", "code": "BM-1CAJ-Lat", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-1CAJ-Lat)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [18.0, 290.0, 500.0], "cut_dims": "500 × 290 × 18 mm", "tbox": [-0.119, 0.13, -0.237, -0.101, 0.42, 0.263]}, {"id": "caj1_cf_tras", "name": "Contrafrente Trasero Cacerolero Inf. (BM-1CAJ-Frente)", "code": "BM-1CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-1CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [341.0, 290.0, 18.0], "cut_dims": "341 × 290 × 18 mm", "tbox": [-0.46, 0.13, -0.237, -0.119, 0.42, -0.219]}, {"id": "caj1_cf_del", "name": "Contrafrente Delantero Cacerolero Inf. (BM-1CAJ-Frente)", "code": "BM-1CAJ-Frente", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Blanco Cajón (BM-1CAJ-Frente)", "edges": "1,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [341.0, 290.0, 18.0], "cut_dims": "341 × 290 × 18 mm", "tbox": [-0.46, 0.13, 0.245, -0.119, 0.42, 0.263]}, {"id": "caj1_fondo", "name": "Fondo 3mm Cacerolero Inf. (BM-FondoCAJ)", "code": "BM-FondoCAJ", "layer": "Layer_Cajones", "zone": "interior_blanco", "mat": "blanco_cajon", "orig_mat": "Plus 3mm Blanco", "edges": "0,0,0,0", "uv_rot": 90, "notched": false, "anim": {"type": "drawer", "group": "cajon_inf", "dist": 0.35}, "mm_dims": [372.0, 3.0, 495.0], "cut_dims": "495 × 372 × 3 mm", "tbox": [-0.475, 0.127, -0.234, -0.103, 0.13, 0.261]}];
+
+    // --- SCENE, CAMERA, RENDERER ---
+    const container = document.getElementById('canvas-container');
+    const hotspotsLayer = document.getElementById('hotspots-layer');
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xc8c0b4); // Warm Greige backdrop
+
+    const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.05, 60);
+    camera.position.set(-1.15, 1.48, 2.35);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.08;
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.065;
+    controls.maxPolarAngle = Math.PI * 0.492; // Stay above Calacatta floor
+    controls.minDistance = 0.55;
+    controls.maxDistance = 14.0;
+    controls.target.set(-0.05, 0.46, 0.0);
+
+    // --- LIGHTING (Warm Natural Showroom + Soft Shadows) ---
+    const ambientLight = new THREE.AmbientLight(0xfffbf4, 1.35);
+    scene.add(ambientLight);
+
+    const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd8d0c5, 0.85);
+    hemiLight.position.set(2, 5, 2);
+    scene.add(hemiLight);
+
+    const dirLight1 = new THREE.DirectionalLight(0xfffaf0, 1.65);
+    dirLight1.position.set(-2.2, 4.8, 3.8);
+    dirLight1.castShadow = true;
+    dirLight1.shadow.mapSize.width = 2048;
+    dirLight1.shadow.mapSize.height = 2048;
+    dirLight1.shadow.camera.near = 0.5;
+    dirLight1.shadow.camera.far = 16;
+    dirLight1.shadow.camera.left = -3.5;
+    dirLight1.shadow.camera.right = 7.5;
+    dirLight1.shadow.camera.top = 4.0;
+    dirLight1.shadow.camera.bottom = -2.5;
+    dirLight1.shadow.bias = -0.0004;
+    scene.add(dirLight1);
+
+    const dirLight2 = new THREE.DirectionalLight(0xf6f3ee, 0.95);
+    dirLight2.position.set(5.5, 4.2, -3.2);
+    scene.add(dirLight2);
+
+    // --- PROCEDURAL CALACATTA 120×60 CM PORCELAIN FLOOR TEXTURE ---
+    function createCalacatta120x60Texture() {
+      // Aspect ratio 2:1 (120cm x 60cm tile). We draw a 2x2 grid of 120x60 tiles (2.40m x 1.20m per repeat)
+      // so adjacent tiles have natural organic vein variation!
+      const canvas = document.createElement('canvas');
+      canvas.width = 2048;
+      canvas.height = 1024;
+      const ctx = canvas.getContext('2d');
+
+      // Warm ivory-white Calacatta marble base
+      ctx.fillStyle = '#f6f4f0';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle cloudiness across the marble
+      for (let i = 0; i < 45; i++) {
+        const cx = Math.random() * canvas.width;
+        const cy = Math.random() * canvas.height;
+        const r = 120 + Math.random() * 260;
+        const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, r);
+        grad.addColorStop(0, i % 3 === 0 ? 'rgba(218, 211, 200, 0.16)' : 'rgba(228, 224, 218, 0.18)');
+        grad.addColorStop(1, 'rgba(246, 244, 240, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Draw authentic Calacatta veining inside each of the 4 tiles (2 cols x 2 rows of 120x60cm)
+      const tileW = 1024; // 120 cm
+      const tileH = 512;  // 60 cm
+
+      function drawCalacattaVeinsInTile(ox, oy, seed) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(ox, oy, tileW, tileH);
+        ctx.clip();
+
+        // 3 main diagonal Calacatta grey-taupe veins per 120x60 slab
+        const veinConfigs = [
+          { startX: ox - 80, startY: oy + 90 + (seed * 53) % 180, endX: ox + tileW + 80, endY: oy + tileH - 60, width: 14, color: 'rgba(150, 145, 138, 0.34)', gold: 'rgba(196, 166, 120, 0.22)' },
+          { startX: ox + 120, startY: oy - 40, endX: ox + tileW - 140, endY: oy + tileH + 40, width: 9, color: 'rgba(130, 125, 118, 0.28)', gold: 'rgba(188, 158, 112, 0.18)' },
+          { startX: ox - 40, startY: oy + tileH - 80, endX: ox + tileW * 0.75, endY: oy + 40, width: 6, color: 'rgba(165, 160, 152, 0.24)', gold: null }
+        ];
+
+        veinConfigs.forEach((vc, vIdx) => {
+          // Soft outer halo
+          ctx.beginPath();
+          ctx.moveTo(vc.startX, vc.startY);
+          const cp1x = ox + tileW * 0.33 + ((seed * 37 + vIdx * 71) % 140 - 70);
+          const cp1y = oy + tileH * 0.28 + ((seed * 29 + vIdx * 43) % 100 - 50);
+          const cp2x = ox + tileW * 0.68 + ((seed * 61 + vIdx * 59) % 140 - 70);
+          const cp2y = oy + tileH * 0.72 + ((seed * 19 + vIdx * 31) % 100 - 50);
+          ctx.bezierCurveTo(cp1x, cp1y, cp2x, cp2y, vc.endX, vc.endY);
+          ctx.strokeStyle = 'rgba(185, 180, 172, 0.16)';
+          ctx.lineWidth = vc.width * 2.8;
+          ctx.lineCap = 'round';
+          ctx.stroke();
+
+          // Core grey Calacatta vein
+          ctx.strokeStyle = vc.color;
+          ctx.lineWidth = vc.width;
+          ctx.stroke();
+
+          // Warm golden-taupe Calacatta mineral thread
+          if (vc.gold) {
+            ctx.strokeStyle = vc.gold;
+            ctx.lineWidth = Math.max(2, vc.width * 0.35);
+            ctx.stroke();
+          }
+
+          // Fine secondary branching fissures
+          for (let b = 0; b < 4; b++) {
+            const bx = ox + tileW * (0.2 + b * 0.2);
+            const by = oy + tileH * (0.25 + ((b * 37 + seed * 13) % 50) / 100);
+            ctx.beginPath();
+            ctx.moveTo(bx, by);
+            ctx.quadraticCurveTo(bx + 75, by - 35, bx + 150, by + 25);
+            ctx.strokeStyle = 'rgba(155, 150, 144, 0.18)';
+            ctx.lineWidth = 2.2;
+            ctx.stroke();
+          }
+        });
+
+        ctx.restore();
+      }
+
+      drawCalacattaVeinsInTile(0, 0, 1);
+      drawCalacattaVeinsInTile(tileW, 0, 2);
+      drawCalacattaVeinsInTile(0, tileH, 3);
+      drawCalacattaVeinsInTile(tileW, tileH, 4);
+
+      // Crisp rectified 120×60 cm porcelain tile grout lines (junta rectificada de 2mm)
+      ctx.strokeStyle = '#cfcac2';
+      ctx.lineWidth = 4;
+      // Horizontal joints at y=0, y=512 (every 60 cm)
+      [0, tileH, canvas.height].forEach(y => {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      });
+      // Vertical joints at x=0, x=1024 (every 120 cm)
+      [0, tileW, canvas.width].forEach(x => {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      });
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      // Room floor is 14.4m wide x 9.6m deep. Each canvas repeat is 2.40m (2x120cm) x 1.20m (2x60cm).
+      // So repeat(6, 8) gives exact 1.20m x 0.60m tiles!
+      tex.repeat.set(6, 8);
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return tex;
+    }
+
+    // --- PROCEDURAL GREIGE PLASTER WALL TEXTURE ---
+    function createGreigeWallTexture() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#c8c0b4'; // Authentic warm Greige
+      ctx.fillRect(0, 0, 512, 512);
+      for (let i = 0; i < 1800; i++) {
+        const x = Math.random() * 512;
+        const y = Math.random() * 512;
+        ctx.fillStyle = i % 2 === 0 ? 'rgba(255,255,255,0.025)' : 'rgba(60,52,44,0.025)';
+        ctx.fillRect(x, y, 3, 3);
+      }
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(4, 2);
+      return tex;
+    }
+
+    // --- MATERIAL & TEXTURE LOADER ---
+    const textureLoader = new THREE.TextureLoader();
+    const loadedTextures = {};
+
+    function getCatalogItem(id) {
+      return CATALOG.find(c => c.id === id) || CATALOG[0];
+    }
+
+    function getThreeTexture(catId, uvRot = 0, repeatScale = 1.0) {
+      const key = `${catId}_${uvRot}_${repeatScale}`;
+      if (loadedTextures[key]) return loadedTextures[key];
+
+      const item = getCatalogItem(catId);
+      if (item && item.tex_url) {
+        const tex = textureLoader.load(item.tex_url);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.wrapT = THREE.RepeatWrapping;
+        if (uvRot === 90) {
+          tex.center.set(0.5, 0.5);
+          tex.rotation = Math.PI / 2;
+        }
+        tex.repeat.set(repeatScale, repeatScale);
+        tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        loadedTextures[key] = tex;
+        return tex;
+      }
+      return null;
+    }
+
+    function createBoardMaterial(catId, uvRot = 0, isWhiteInterior = false) {
+      if (isWhiteInterior && catId === 'blanco_cajon') {
+        return new THREE.MeshStandardMaterial({
+          color: new THREE.Color('#f2f1ed'),
+          roughness: 0.42,
+          metalness: 0.02
+        });
+      }
+      const item = getCatalogItem(catId);
+      const tex = getThreeTexture(catId, uvRot, 1.35);
+      const mat = new THREE.MeshStandardMaterial({
+        color: tex ? new THREE.Color('#ffffff') : new THREE.Color(item ? item.hex : '#b07f59'),
+        map: tex || null,
+        roughness: item && item.category === 'Piedras y Metales' ? 0.36 : 0.46,
+        metalness: item && item.id.includes('chromix') ? 0.22 : 0.04
+      });
+      return mat;
+    }
+
+    // --- BUILD EMPTY GREIGE ROOM WITH WOOD BASEBOARDS & CALACATTA 120×60 FLOOR ---
+    // Room spans X: [-4.2m .. +8.2m] (12.4m wide, housing Mueble 1 at X=0m and Mueble 2 at X=+4.0m)
+    // Z: [-0.36m .. +9.24m] (9.6m deep), Y: [0.0m .. 3.2m]
+    const roomGroup = new THREE.Group();
+    scene.add(roomGroup);
+
+    // 1. Floor: 14.4m × 9.6m Calacatta 120×60 cm porcelain floor
+    const calacattaTex = createCalacatta120x60Texture();
+    const floorGeo = new THREE.PlaneGeometry(14.4, 9.6);
+    const floorMat = new THREE.MeshPhysicalMaterial({
+      map: calacattaTex,
+      roughness: 0.20,
+      metalness: 0.03,
+      clearcoat: 0.32,
+      clearcoatRoughness: 0.18
+    });
+    const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+    floorMesh.rotation.x = -Math.PI / 2;
+    floorMesh.position.set(2.0, 0.0, 4.44);
+    floorMesh.receiveShadow = true;
+    roomGroup.add(floorMesh);
+
+    // 2. Greige Walls (Back wall right behind the furniture at Z = -0.32m, Left wall at X = -3.6m, Right wall at X = +7.6m)
+    const greigeTex = createGreigeWallTexture();
+    const wallMatBack = new THREE.MeshStandardMaterial({
+      map: greigeTex,
+      color: new THREE.Color('#ece6dc'),
+      roughness: 0.86,
+      metalness: 0.01,
+      transparent: true,
+      opacity: 1.0
+    });
+    const wallMatSide = new THREE.MeshStandardMaterial({
+      map: greigeTex,
+      color: new THREE.Color('#e6dfd4'),
+      roughness: 0.86,
+      metalness: 0.01
+    });
+
+    const wallHeight = 3.2;
+    const backWallZ = -0.32; // Just 2cm behind the 60cm deep furniture (Z = -0.30m to +0.30m)
+    const leftWallX = -3.4;
+    const rightWallX = 7.4;
+    const roomWidth = rightWallX - leftWallX; // 10.8m
+    const roomDepth = 7.5;
+
+    // Back wall
+    const backWallMesh = new THREE.Mesh(new THREE.BoxGeometry(roomWidth, wallHeight, 0.08), wallMatBack);
+    backWallMesh.position.set((leftWallX + rightWallX) / 2, wallHeight / 2, backWallZ - 0.04);
+    backWallMesh.receiveShadow = true;
+    roomGroup.add(backWallMesh);
+
+    // Left wall
+    const leftWallMesh = new THREE.Mesh(new THREE.BoxGeometry(0.08, wallHeight, roomDepth), wallMatSide);
+    leftWallMesh.position.set(leftWallX - 0.04, wallHeight / 2, backWallZ + roomDepth / 2);
+    leftWallMesh.receiveShadow = true;
+    roomGroup.add(leftWallMesh);
+
+    // Right wall
+    const rightWallMesh = new THREE.Mesh(new THREE.BoxGeometry(0.08, wallHeight, roomDepth), wallMatSide);
+    rightWallMesh.position.set(rightWallX + 0.04, wallHeight / 2, backWallZ + roomDepth / 2);
+    rightWallMesh.receiveShadow = true;
+    roomGroup.add(rightWallMesh);
+
+    // 3. Room Baseboards (Zócalos de la habitación del mismo tono madera que el mueble: H3170 ST12 Roble Kendal natural)
+    const baseboardMeshes = [];
+    const baseboardHeight = 0.095; // 95 mm matching the furniture toe-kick height
+    const baseboardThick = 0.016;  // 16 mm melamina/wood baseboard
+
+    function buildRoomBaseboards(woodCatId) {
+      const tex = getThreeTexture(woodCatId, 90, 2.5);
+      const item = getCatalogItem(woodCatId);
+      const bbMatBack = new THREE.MeshStandardMaterial({
+        map: tex || null,
+        color: tex ? new THREE.Color('#ffffff') : new THREE.Color(item ? item.hex : '#b07f59'),
+        roughness: 0.44,
+        metalness: 0.04,
+        transparent: true,
+        opacity: 1.0
+      });
+      const bbMatSide = bbMatBack.clone();
+
+      // Back wall baseboard
+      const bbBack = new THREE.Mesh(new THREE.BoxGeometry(roomWidth, baseboardHeight, baseboardThick), bbMatBack);
+      bbBack.position.set((leftWallX + rightWallX) / 2, baseboardHeight / 2, backWallZ + baseboardThick / 2);
+      bbBack.castShadow = true;
+      bbBack.receiveShadow = true;
+      roomGroup.add(bbBack);
+
+      // Left wall baseboard
+      const bbLeft = new THREE.Mesh(new THREE.BoxGeometry(baseboardThick, baseboardHeight, roomDepth), bbMatSide);
+      bbLeft.position.set(leftWallX + baseboardThick / 2, baseboardHeight / 2, backWallZ + roomDepth / 2);
+      bbLeft.castShadow = true;
+      bbLeft.receiveShadow = true;
+      roomGroup.add(bbLeft);
+
+      // Right wall baseboard
+      const bbRight = new THREE.Mesh(new THREE.BoxGeometry(baseboardThick, baseboardHeight, roomDepth), bbMatSide);
+      bbRight.position.set(rightWallX - baseboardThick / 2, baseboardHeight / 2, backWallZ + roomDepth / 2);
+      bbRight.castShadow = true;
+      bbRight.receiveShadow = true;
+      roomGroup.add(bbRight);
+
+      baseboardMeshes.push({ mesh: bbBack, isBack: true }, { mesh: bbLeft, isBack: false }, { mesh: bbRight, isBack: false });
+    }
+    buildRoomBaseboards('roble_kendal_nat');
+
+    function updateRoomBaseboardsMaterial(woodCatId) {
+      const tex = getThreeTexture(woodCatId, 90, 2.5);
+      const item = getCatalogItem(woodCatId);
+      baseboardMeshes.forEach(b => {
+        b.mesh.material.map = tex || null;
+        b.mesh.material.color.set(tex ? '#ffffff' : (item ? item.hex : '#b07f59'));
+        b.mesh.material.needsUpdate = true;
+      });
+    }
+
+    // Subtle 4.00m Floor Distance Guide Line between Mueble 1 (X=0m) and Mueble 2 (X=4.0m)
+    const distLineGroup = new THREE.Group();
+    const lineGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0.953, 0.004, 0.42),
+      new THREE.Vector3(4.0 - 0.953, 0.004, 0.42)
+    ]);
+    const lineMat = new THREE.LineBasicMaterial({ color: 0xd19a66, transparent: true, opacity: 0.75 });
+    distLineGroup.add(new THREE.Line(lineGeo, lineMat));
+    // Center tick at X = 0 and X = 4.0
+    const centerLineGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0.0, 0.003, 0.52),
+      new THREE.Vector3(4.0, 0.003, 0.52)
+    ]);
+    distLineGroup.add(new THREE.Line(centerLineGeo, new THREE.LineBasicMaterial({ color: 0x8c6239, transparent: true, opacity: 0.45 })));
+    scene.add(distLineGroup);
+
+    // --- CREATE L-NOTCHED GEOMETRY FOR BM-LAT PANELS SO BM-1FAJAFRONTAL FITS FLUSH ---
+    // In sebasCocina.skp:
+    //   BM-Lat spans Y_three: [0.113 .. 0.880] (height 0.767m), Z_three: [-0.295 .. +0.263] (depth 0.558m), X_three width 0.018m.
+    //   BM-1FajaFrontal occupies Y_three: [0.820 .. 0.880] (top 60mm) and Z_three: [0.245 .. 0.263] (front 18mm).
+    //   Constructing BM-Lat with that exact 18×60mm notch eliminates all Z-fighting and looks 100% identical to image_d81423.jpg!
+    function createNotchedLateralGeometry(widthX, heightY, depthZ) {
+      const hx = widthX / 2;
+      const hy = heightY / 2;
+      const hz = depthZ / 2;
+      const notchH = 0.060; // 60 mm top notch
+      const notchD = 0.018; // 18 mm front notch
+
+      // 2D profile in (Z, Y) plane extruded along X
+      const shape = new THREE.Shape();
+      shape.moveTo(-hz, -hy);
+      shape.lineTo( hz, -hy);
+      shape.lineTo( hz,  hy - notchH);
+      shape.lineTo( hz - notchD, hy - notchH);
+      shape.lineTo( hz - notchD, hy);
+      shape.lineTo(-hz,  hy);
+      shape.closePath();
+
+      const extrudeGeo = new THREE.ExtrudeGeometry(shape, {
+        depth: widthX,
+        bevelEnabled: false
+      });
+      // ExtrudeGeometry extrudes along +Z from 0..widthX with shape in (X,Y).
+      // Rotate so shape (Z,Y) maps to Three.js (Z,Y) and extrusion maps to X: [-hx .. +hx]
+      const pos = extrudeGeo.attributes.position;
+      const uv = extrudeGeo.attributes.uv;
+      for (let i = 0; i < pos.count; i++) {
+        const sx = pos.getX(i); // was Z
+        const sy = pos.getY(i); // was Y
+        const sz = pos.getZ(i); // was extrusion X (0..widthX)
+        const realX = sz - hx;
+        const realY = sy;
+        const realZ = sx;
+        pos.setXYZ(i, realX, realY, realZ);
+        uv.setXY(i, (realZ + hz) / depthZ, (realY + hy) / heightY);
+      }
+      extrudeGeo.computeVertexNormals();
+      return extrudeGeo;
+    }
+
+    // --- BUILD EXACT SEBASCOCINA.SKP FURNITURE UNIT (INSTANTIATED AT X=0.00m AND X=+4.00m) ---
+    const units = {};
+    const clickableMeshes = [];
+    const edgeLineMat = new THREE.LineBasicMaterial({ color: 0x231f1c, transparent: true, opacity: 0.34 });
+
+    function buildSebasCocinaUnit(unitId, offsetX, labelTitle) {
+      const root = new THREE.Group();
+      root.position.set(offsetX, 0, 0);
+      scene.add(root);
+
+      const unitState = {
+        id: unitId,
+        label: labelTitle,
+        offsetX: offsetX,
+        root: root,
+        meshes: [],
+        animGroups: {},
+        zones: {
+          frentes: 'roble_kendal_nat',
+          casco: 'sauco',
+          mesada: 'amberes',
+          zocalo: 'chromix_plata',
+          interior_blanco: 'blanco_cajon'
+        }
+      };
+
+      // Create animation pivot groups for the 2 doors and 3 stepped drawers:
+      // 1. Left Door (BM-Puerta): hinges on its LEFT edge (tx0 = -0.950m, tz = +0.272m)
+      const pivotDoorLeft = new THREE.Group();
+      pivotDoorLeft.position.set(-0.950, 0.484, 0.272);
+      root.add(pivotDoorLeft);
+      unitState.animGroups['puerta_izq'] = {
+        type: 'door',
+        pivot: pivotDoorLeft,
+        isOpen: false,
+        currentVal: 0,
+        targetVal: 0,
+        openAngle: -1.32, // Opens outward to front-left (image_d814ba.jpg)
+        label: 'Puerta Izq.',
+        hotspotLocalPos: new THREE.Vector3(-0.73, 0.50, 0.31)
+      };
+
+      // 2. Center-Right Door (BM-Puerta#1): hinges on its RIGHT edge (tx1 = +0.371m, tz = +0.272m)
+      const pivotDoorRight = new THREE.Group();
+      pivotDoorRight.position.set(0.371, 0.484, 0.272);
+      root.add(pivotDoorRight);
+      unitState.animGroups['puerta_der'] = {
+        type: 'door',
+        pivot: pivotDoorRight,
+        isOpen: false,
+        currentVal: 0,
+        targetVal: 0,
+        openAngle: 1.32, // Opens outward to front-right (image_d814ba.jpg)
+        label: 'Puerta Der.',
+        hotspotLocalPos: new THREE.Vector3(0.15, 0.50, 0.31)
+      };
+
+      // 3. Top Drawer (BM-3CAJ): slides +Z by 0.14m (140mm)
+      const groupCajSup = new THREE.Group();
+      root.add(groupCajSup);
+      unitState.animGroups['cajon_sup'] = {
+        type: 'drawer',
+        pivot: groupCajSup,
+        isOpen: false,
+        currentVal: 0,
+        targetVal: 0,
+        openDist: 0.14,
+        label: '1° Cajón',
+        hotspotLocalPos: new THREE.Vector3(-0.29, 0.775, 0.31)
+      };
+
+      // 4. Middle Drawer (BM-2CAJ): slides +Z by 0.24m (240mm)
+      const groupCajMed = new THREE.Group();
+      root.add(groupCajMed);
+      unitState.animGroups['cajon_med'] = {
+        type: 'drawer',
+        pivot: groupCajMed,
+        isOpen: false,
+        currentVal: 0,
+        targetVal: 0,
+        openDist: 0.24,
+        label: '2° Cajón',
+        hotspotLocalPos: new THREE.Vector3(-0.29, 0.581, 0.31)
+      };
+
+      // 5. Bottom Cacerolero Drawer (BM-1CAJ): slides +Z by 0.35m (350mm)
+      const groupCajInf = new THREE.Group();
+      root.add(groupCajInf);
+      unitState.animGroups['cajon_inf'] = {
+        type: 'drawer',
+        pivot: groupCajInf,
+        isOpen: false,
+        currentVal: 0,
+        targetVal: 0,
+        openDist: 0.35,
+        label: '3° Cacerolero',
+        hotspotLocalPos: new THREE.Vector3(-0.29, 0.290, 0.31)
+      };
+
+      // Instantiate all 38 boards from sebasCocina.skp
+      PIECES_DATA.forEach(piece => {
+        const [tx0, ty0, tz0, tx1, ty1, tz1] = piece.tbox;
+        const w = tx1 - tx0;
+        const h = ty1 - ty0;
+        const d = tz1 - tz0;
+        const cx = (tx0 + tx1) / 2;
+        const cy = (ty0 + ty1) / 2;
+        const cz = (tz0 + tz1) / 2;
+
+        let geo;
+        if (piece.notched) {
+          geo = createNotchedLateralGeometry(w, h, d);
+        } else {
+          geo = new THREE.BoxGeometry(w, h, d);
+        }
+
+        const isWhite = piece.mat === 'blanco_cajon';
+        const mat = createBoardMaterial(piece.mat, piece.uv_rot, isWhite);
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+
+        // Crisp architectural edges
+        const edgesGeo = new THREE.EdgesGeometry(geo, 28);
+        const edgeLines = new THREE.LineSegments(edgesGeo, edgeLineMat);
+        mesh.add(edgeLines);
+
+        mesh.userData = {
+          unitId: unitId,
+          unitLabel: labelTitle,
+          piece: piece,
+          activeMatId: piece.mat
+        };
+
+        // Attach to corresponding animated pivot or static root
+        if (piece.anim && piece.anim.group === 'puerta_izq') {
+          mesh.position.set(cx - (-0.950), cy - 0.484, cz - 0.272);
+          pivotDoorLeft.add(mesh);
+        } else if (piece.anim && piece.anim.group === 'puerta_der') {
+          mesh.position.set(cx - 0.371, cy - 0.484, cz - 0.272);
+          pivotDoorRight.add(mesh);
+        } else if (piece.anim && piece.anim.group === 'cajon_sup') {
+          mesh.position.set(cx, cy, cz);
+          groupCajSup.add(mesh);
+        } else if (piece.anim && piece.anim.group === 'cajon_med') {
+          mesh.position.set(cx, cy, cz);
+          groupCajMed.add(mesh);
+        } else if (piece.anim && piece.anim.group === 'cajon_inf') {
+          mesh.position.set(cx, cy, cz);
+          groupCajInf.add(mesh);
+        } else {
+          mesh.position.set(cx, cy, cz);
+          root.add(mesh);
+        }
+
+        unitState.meshes.push(mesh);
+        clickableMeshes.push(mesh);
+      });
+
+      units[unitId] = unitState;
+      return unitState;
+    }
+
+    // Build Mueble 1 at X = 0.00m and Mueble 2 at X = +4.00m (4 meters to its right!)
+    buildSebasCocinaUnit(1, 0.0, 'Mueble 1 · Principal (0.00m)');
+    buildSebasCocinaUnit(2, 4.0, 'Mueble 2 · A 4.00m Derecha (+4.00m)');
+
+    // --- 3D INTERACTIVE HOTSPOT BUTTONS OVER BOTH FURNITURE UNITS ---
+    let hotspotsVisible = true;
+    const hotspotElements = [];
+
+    function createHotspotsDOM() {
+      hotspotsLayer.innerHTML = '';
+      hotspotElements.length = 0;
+
+      [1, 2].forEach(uid => {
+        const u = units[uid];
+
+        // 1. Unit Top Header Button (Click to move camera to this furniture!)
+        const headerEl = document.createElement('button');
+        headerEl.className = 'hotspot-unit-header';
+        headerEl.innerHTML = `<span>${uid === 1 ? 'Mueble 1 (0.00m)' : 'Mueble 2 (+4.00m Derecha)'}</span>`;
+        headerEl.onclick = (e) => {
+          e.stopPropagation();
+          window.moveToUnit(uid);
+        };
+        hotspotsLayer.appendChild(headerEl);
+        hotspotElements.push({
+          el: headerEl,
+          unitId: uid,
+          type: 'header',
+          worldPos: new THREE.Vector3(u.offsetX, 1.06, 0.0)
+        });
+
+        // 2. Interactive Action Buttons for Doors & 3 Drawers on each Furniture
+        Object.keys(u.animGroups).forEach(groupKey => {
+          const ag = u.animGroups[groupKey];
+          const btn = document.createElement('button');
+          btn.className = 'hotspot-3d';
+          btn.id = `hs-u${uid}-${groupKey}`;
+          btn.innerHTML = `<span class="hs-icon">+</span><span class="hs-txt">${ag.label}</span>`;
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            window.triggerGroup(uid, groupKey);
+          };
+          hotspotsLayer.appendChild(btn);
+          hotspotElements.push({
+            el: btn,
+            unitId: uid,
+            groupKey: groupKey,
+            type: 'anim',
+            localPos: ag.hotspotLocalPos.clone()
+          });
+        });
+      });
+
+      // 3. 4.00m Distance Interactive Badge between Mueble 1 and Mueble 2
+      const distBadge = document.createElement('button');
+      distBadge.className = 'hotspot-distance-badge';
+      distBadge.innerHTML = '↔ Separación: 4.00 metros (Clic para ver ambos)';
+      distBadge.onclick = (e) => {
+        e.stopPropagation();
+        window.moveToBothUnits();
+      };
+      hotspotsLayer.appendChild(distBadge);
+      hotspotElements.push({
+        el: distBadge,
+        type: 'distance',
+        worldPos: new THREE.Vector3(2.0, 0.14, 0.45)
+      });
+    }
+    createHotspotsDOM();
+
+    function updateHotspotsProjection() {
+      if (!hotspotsVisible) {
+        hotspotsLayer.style.display = 'none';
+        return;
+      }
+      hotspotsLayer.style.display = 'block';
+
+      const halfW = window.innerWidth / 2;
+      const halfH = window.innerHeight / 2;
+
+      hotspotElements.forEach(item => {
+        let wp;
+        if (item.type === 'anim') {
+          const u = units[item.unitId];
+          const ag = u.animGroups[item.groupKey];
+          wp = item.localPos.clone();
+          if (ag.type === 'drawer') {
+            wp.z += ag.currentVal;
+          } else if (ag.type === 'door') {
+            // Rotate hotspot slightly with door swing
+            wp.z += Math.abs(Math.sin(ag.currentVal)) * 0.18;
+          }
+          wp.x += u.offsetX;
+        } else {
+          wp = item.worldPos.clone();
+        }
+
+        const projected = wp.clone().project(camera);
+        if (projected.z > 1.0) {
+          item.el.style.display = 'none';
+          return;
+        }
+        const sx = (projected.x * halfW) + halfW;
+        const sy = -(projected.y * halfH) + halfH;
+
+        if (sx < -60 || sx > window.innerWidth + 60 || sy < -40 || sy > window.innerHeight + 40) {
+          item.el.style.display = 'none';
+          return;
+        }
+        item.el.style.display = 'flex';
+        item.el.style.left = `${sx}px`;
+        item.el.style.top = `${sy}px`;
+      });
+    }
+
+    // --- INTERACTIVE ANIMATION TRIGGERS (DOORS & DRAWERS) ---
+    window.activeUnitId = 1;
+
+    function syncInspectorButtons() {
+      const u = units[window.activeUnitId];
+      document.getElementById('unit-ctrl-label').textContent = `Botones Interactivos · Mueble ${window.activeUnitId}`;
+      document.getElementById('btn-switch-unit-ctrl').textContent = window.activeUnitId === 1 ? 'Cambiar a Mueble 2 (+4m)' : 'Cambiar a Mueble 1 (0m)';
+
+      Object.keys(u.animGroups).forEach(gk => {
+        const ag = u.animGroups[gk];
+        const panelBtn = document.getElementById(`ctrl-${gk}`);
+        if (panelBtn) {
+          panelBtn.classList.toggle('is-open', ag.isOpen);
+        }
+      });
+
+      [1, 2].forEach(uid => {
+        Object.keys(units[uid].animGroups).forEach(gk => {
+          const ag = units[uid].animGroups[gk];
+          const hsBtn = document.getElementById(`hs-u${uid}-${gk}`);
+          if (hsBtn) {
+            hsBtn.classList.toggle('is-open', ag.isOpen);
+            const icon = hsBtn.querySelector('.hs-icon');
+            if (icon) icon.textContent = ag.isOpen ? '−' : '+';
+          }
+        });
+      });
+    }
+
+    window.triggerGroup = function(unitId, groupKey, forceState = null) {
+      const u = units[unitId];
+      if (!u || !u.animGroups[groupKey]) return;
+      const ag = u.animGroups[groupKey];
+      ag.isOpen = forceState !== null ? forceState : !ag.isOpen;
+      if (ag.type === 'door') {
+        ag.targetVal = ag.isOpen ? ag.openAngle : 0;
+      } else {
+        ag.targetVal = ag.isOpen ? ag.openDist : 0;
+      }
+      window.activeUnitId = unitId;
+      syncInspectorButtons();
+    };
+
+    window.switchActiveUnit = function() {
+      window.activeUnitId = window.activeUnitId === 1 ? 2 : 1;
+      window.moveToUnit(window.activeUnitId);
+      syncInspectorButtons();
+    };
+
+    let allOpenState = false;
+    window.toggleAllOpen = function(force = null) {
+      allOpenState = force !== null ? force : !allOpenState;
+      [1, 2].forEach(uid => {
+        Object.keys(units[uid].animGroups).forEach(gk => {
+          window.triggerGroup(uid, gk, allOpenState);
+        });
+      });
+      const btn = document.getElementById('btn-open-all');
+      btn.classList.toggle('active-toggle', allOpenState);
+      btn.querySelector('span').textContent = allOpenState ? 'Cerrar Puertas y Cajones' : 'Abrir Puertas y Cajones';
+    };
+
+    let countertopVisible = true;
+    window.toggleCountertop = function(force = null) {
+      countertopVisible = force !== null ? force : !countertopVisible;
+      [1, 2].forEach(uid => {
+        units[uid].meshes.forEach(m => {
+          if (m.userData.piece.id === 'mesada') {
+            m.visible = countertopVisible;
+          }
+        });
+      });
+      const btn = document.getElementById('btn-toggle-mesada');
+      btn.classList.toggle('active-toggle', !countertopVisible);
+      btn.querySelector('span').textContent = countertopVisible ? 'Ver Sin Mesada (Encastre)' : 'Mostrar Mesada Superior';
+    };
+
+    window.toggleHotspots = function() {
+      hotspotsVisible = !hotspotsVisible;
+      const btn = document.getElementById('btn-toggle-hotspots');
+      btn.classList.toggle('active-toggle', hotspotsVisible);
+      btn.querySelector('span').textContent = hotspotsVisible ? 'Botones 3D: ON' : 'Botones 3D: OFF';
+    };
+
+    window.toggleRightPanel = function() {
+      document.getElementById('right-panel').classList.toggle('collapsed');
+    };
+
+    // --- SMOOTH CAMERA DISPLACEMENT BETWEEN MUEBLE 1 (0m) AND MUEBLE 2 (+4m) ---
+    let camTransition = null;
+
+    function animateCameraTo(posVec, targetVec, durationMs = 750) {
+      camTransition = {
+        startPos: camera.position.clone(),
+        startTarget: controls.target.clone(),
+        endPos: posVec.clone(),
+        endTarget: targetVec.clone(),
+        startTime: performance.now(),
+        duration: durationMs
+      };
+    }
+
+    function setActiveNavBtn(id) {
+      ['btn-go-m1', 'btn-go-both', 'btn-go-m2'].forEach(bid => {
+        const el = document.getElementById(bid);
+        if (el) el.classList.toggle('active', bid === id);
+      });
+    }
+
+    function setActiveCamBtn(id) {
+      ['cam-front', 'cam-open-step', 'cam-corner', 'cam-top-nofull', 'cam-back', 'cam-both'].forEach(cid => {
+        const el = document.getElementById(cid);
+        if (el) el.classList.toggle('active', cid === id);
+      });
+    }
+
+    window.moveToUnit = function(unitId) {
+      window.activeUnitId = unitId;
+      const ox = units[unitId].offsetX;
+      setActiveNavBtn(unitId === 1 ? 'btn-go-m1' : 'btn-go-m2');
+      syncInspectorButtons();
+      document.getElementById('insp-badge').textContent = unitId === 1 ? 'MUEBLE 1 · PRINCIPAL (0.00m)' : 'MUEBLE 2 · A 4.00m DERECHA';
+      animateCameraTo(
+        new THREE.Vector3(ox - 1.15, 1.48, 2.35),
+        new THREE.Vector3(ox - 0.05, 0.46, 0.0),
+        750
+      );
+    };
+
+    window.moveToBothUnits = function() {
+      setActiveNavBtn('btn-go-both');
+      setActiveCamBtn('cam-both');
+      animateCameraTo(
+        new THREE.Vector3(2.0, 1.85, 4.95),
+        new THREE.Vector3(2.0, 0.45, 0.0),
+        850
+      );
+    };
+
+    window.stepCameraX = function(deltaX) {
+      const newPos = camera.position.clone();
+      const newTarget = controls.target.clone();
+      newPos.x = Math.max(-2.5, Math.min(6.5, newPos.x + deltaX));
+      newTarget.x = Math.max(-2.0, Math.min(6.0, newTarget.x + deltaX));
+      animateCameraTo(newPos, newTarget, 420);
+    };
+
+    // Presets matching the 6 uploaded SketchUp screenshots
+    window.setCameraView = function(viewKey) {
+      const ox = units[window.activeUnitId].offsetX;
+      if (viewKey === 'front') {
+        setActiveCamBtn('cam-front');
+        window.toggleAllOpen(false);
+        window.toggleCountertop(true);
+        animateCameraTo(new THREE.Vector3(ox - 1.15, 1.48, 2.35), new THREE.Vector3(ox - 0.05, 0.46, 0.0));
+      } else if (viewKey === 'open_step') {
+        // Exact match to image_d814ba.jpg (both doors open outward + 3 drawers stepped open)
+        setActiveCamBtn('cam-open-step');
+        window.toggleCountertop(true);
+        window.toggleAllOpen(true);
+        animateCameraTo(new THREE.Vector3(ox - 1.35, 1.52, 2.35), new THREE.Vector3(ox - 0.10, 0.44, 0.12));
+      } else if (viewKey === 'corner') {
+        // Exact match to image_d81484.png (front-right angle showing BM-PuertaCiega & 212BAR Sauco side)
+        setActiveCamBtn('cam-corner');
+        window.toggleAllOpen(false);
+        window.toggleCountertop(true);
+        animateCameraTo(new THREE.Vector3(ox + 1.45, 1.42, 2.25), new THREE.Vector3(ox + 0.15, 0.45, 0.0));
+      } else if (viewKey === 'top_encastre') {
+        // Exact match to image_d81423.jpg (countertop hidden showing BM-1FajaFrontal inset into BM-Lat & Amberes drawer base)
+        setActiveCamBtn('cam-top-nofull');
+        window.toggleAllOpen(false);
+        window.toggleCountertop(false);
+        animateCameraTo(new THREE.Vector3(ox - 0.95, 1.72, 2.05), new THREE.Vector3(ox - 0.05, 0.48, 0.0));
+      } else if (viewKey === 'back') {
+        // Exact match to image_d81464.jpg (rear view showing open back, white top fajas, white drawer boxes, Sauco shelves)
+        setActiveCamBtn('cam-back');
+        window.toggleCountertop(false);
+        animateCameraTo(new THREE.Vector3(ox + 1.15, 1.45, -2.25), new THREE.Vector3(ox + 0.0, 0.45, 0.0));
+      }
+    };
+
+    // --- RAYCASTER PIECE SELECTION & HIGHLIGHT ---
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let pointerDownPos = { x: 0, y: 0 };
+    let selectedMesh = null;
+
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      pointerDownPos = { x: e.clientX, y: e.clientY };
+    });
+
+    renderer.domElement.addEventListener('pointerup', (e) => {
+      const dist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+      if (dist > 6) return; // Ignore orbit drag
+
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+
+      const hits = raycaster.intersectObjects(clickableMeshes.filter(m => m.visible), false);
+      if (hits.length > 0) {
+        const hitMesh = hits[0].object;
+        selectPieceMesh(hitMesh);
+
+        // If the piece belongs to a door or drawer, also toggle its opening animation!
+        const p = hitMesh.userData.piece;
+        if (p.anim && p.anim.group) {
+          window.triggerGroup(hitMesh.userData.unitId, p.anim.group);
+        }
+      }
+    });
+
+    function selectPieceMesh(mesh) {
+      if (selectedMesh && selectedMesh.material) {
+        selectedMesh.material.emissive.setHex(0x000000);
+      }
+      selectedMesh = mesh;
+      if (selectedMesh && selectedMesh.material) {
+        selectedMesh.material.emissive.setHex(0x2c1d0e);
+      }
+
+      const { unitId, piece, activeMatId } = mesh.userData;
+      window.activeUnitId = unitId;
+      syncInspectorButtons();
+
+      const catItem = getCatalogItem(activeMatId);
+      document.getElementById('insp-badge').textContent = `MUEBLE ${unitId} (${unitId === 1 ? '0.00m' : '+4.00m'}) · ${piece.layer.replace('Layer_', '')}`;
+      document.getElementById('insp-code').textContent = piece.code;
+      document.getElementById('insp-title').textContent = piece.name;
+      document.getElementById('insp-desc').textContent = piece.anim
+        ? `Pieza móvil interactiva (${piece.anim.type === 'door' ? 'Puerta batiente' : 'Cajón corredizo'}). Haz clic para abrir o cerrar.`
+        : `Placa estructural modelada en SketchUp (${piece.orig_mat}). Cantos: ${piece.edges}.`;
+      document.getElementById('insp-dims').textContent = piece.cut_dims;
+      document.getElementById('insp-mat').textContent = catItem ? catItem.name : piece.orig_mat;
+    }
+
+    // --- MELAMINA & COLOR CUSTOMIZER LOGIC ---
+    let currentScope = 'both'; // 'both', '1', '2'
+    let currentZone = 'frentes';
+    let currentFilter = 'all';
+
+    window.setCustomScope = function(scope) {
+      currentScope = scope;
+      ['both', '1', '2'].forEach(s => {
+        const btn = document.getElementById(s === 'both' ? 'scope-both' : `scope-m${s}`);
+        if (btn) btn.classList.toggle('active', s === scope);
+      });
+      renderSwatches();
+    };
+
+    window.selectZone = function(zone) {
+      currentZone = zone;
+      document.querySelectorAll('.zone-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.zone === zone);
+      });
+      renderSwatches();
+    };
+
+    window.filterSwatches = function(filter) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-row .filter-chip').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+      });
+      renderSwatches();
+    };
+
+    window.applyZoneMaterial = function(catId) {
+      const targetUnits = currentScope === 'both' ? [1, 2] : [parseInt(currentScope, 10)];
+      targetUnits.forEach(uid => {
+        const u = units[uid];
+        u.zones[currentZone] = catId;
+        u.meshes.forEach(m => {
+          const p = m.userData.piece;
+          if (p.zone === currentZone) {
+            const newMat = createBoardMaterial(catId, p.uv_rot, false);
+            m.material.dispose();
+            m.material = newMat;
+            m.userData.activeMatId = catId;
+          }
+        });
+      });
+
+      // Keep the room baseboards synced with the furniture wood fronts tone!
+      if (currentZone === 'frentes' && (currentScope === 'both' || currentScope === '1')) {
+        updateRoomBaseboardsMaterial(catId);
+      }
+
+      renderSwatches();
+    };
+
+    window.resetOriginalMaterials = function() {
+      [1, 2].forEach(uid => {
+        const u = units[uid];
+        u.zones = {
+          frentes: 'roble_kendal_nat',
+          casco: 'sauco',
+          mesada: 'amberes',
+          zocalo: 'chromix_plata',
+          interior_blanco: 'blanco_cajon'
+        };
+        u.meshes.forEach(m => {
+          const p = m.userData.piece;
+          const isWhite = p.mat === 'blanco_cajon';
+          m.material.dispose();
+          m.material = createBoardMaterial(p.mat, p.uv_rot, isWhite);
+          m.userData.activeMatId = p.mat;
+        });
+      });
+      updateRoomBaseboardsMaterial('roble_kendal_nat');
+      renderSwatches();
+    };
+
+    function renderSwatches() {
+      const containerEl = document.getElementById('swatches-container');
+      containerEl.innerHTML = '';
+
+      const refUnit = currentScope === '2' ? units[2] : units[1];
+      const activeId = refUnit.zones[currentZone];
+
+      const filtered = CATALOG.filter(item => {
+        if (currentFilter === 'all') return true;
+        return item.category === currentFilter;
+      });
+
+      filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = `swatch-card ${item.id === activeId ? 'selected' : ''}`;
+        card.onclick = () => window.applyZoneMaterial(item.id);
+
+        const prev = document.createElement('div');
+        prev.className = 'swatch-preview';
+        if (item.tex_url) {
+          prev.style.backgroundImage = `url('${item.tex_url}')`;
+        } else {
+          prev.style.backgroundColor = item.hex;
+        }
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'swatch-name';
+        nameEl.textContent = item.name;
+
+        const brandEl = document.createElement('div');
+        brandEl.className = 'swatch-brand';
+        brandEl.textContent = `${item.code} · ${item.brand}`;
+
+        card.appendChild(prev);
+        card.appendChild(nameEl);
+        card.appendChild(brandEl);
+        containerEl.appendChild(card);
+      });
+    }
+    renderSwatches();
+
+    // Keyboard shortcuts (Left/Right arrows or A/D to test displacement between the 2 furniture stands)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        window.stepCameraX(0.8);
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        window.stepCameraX(-0.8);
+      } else if (e.key === '1') {
+        window.moveToUnit(1);
+      } else if (e.key === '2') {
+        window.moveToUnit(2);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // --- MAIN ANIMATION LOOP ---
+    function animate(now) {
+      requestAnimationFrame(animate);
+
+      // Smooth camera transition
+      if (camTransition) {
+        const t = Math.min(1, (now - camTransition.startTime) / camTransition.duration);
+        const ease = 1 - Math.pow(1 - t, 3);
+        camera.position.lerpVectors(camTransition.startPos, camTransition.endPos, ease);
+        controls.target.lerpVectors(camTransition.startTarget, camTransition.endTarget, ease);
+        if (t >= 1) camTransition = null;
+      }
+
+      controls.update();
+
+      // Automatically fade the back Greige wall & back baseboard if camera orbits behind Z < -0.15m
+      // so the back view (Foto 4 / image_d81464.jpg) is never obstructed!
+      const backOpacity = camera.position.z < -0.10 ? 0.06 : 1.0;
+      wallMatBack.opacity += (backOpacity - wallMatBack.opacity) * 0.18;
+      baseboardMeshes.forEach(b => {
+        if (b.isBack) {
+          b.mesh.material.opacity = wallMatBack.opacity;
+        }
+      });
+
+      // Animate doors and drawers on both Mueble 1 and Mueble 2
+      [1, 2].forEach(uid => {
+        const u = units[uid];
+        Object.keys(u.animGroups).forEach(gk => {
+          const ag = u.animGroups[gk];
+          const diff = ag.targetVal - ag.currentVal;
+          if (Math.abs(diff) > 0.0005) {
+            ag.currentVal += diff * 0.14;
+            if (ag.type === 'door') {
+              ag.pivot.rotation.y = ag.currentVal;
+            } else if (ag.type === 'drawer') {
+              ag.pivot.position.z = ag.currentVal;
+            }
+          }
+        });
+      });
+
+      updateHotspotsProjection();
+      renderer.render(scene, camera);
+    }
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
