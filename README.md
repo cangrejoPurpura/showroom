@@ -1,23 +1,15 @@
-# Showroom 3D Interactivo - Sebas Cocina (`sebasCocina.skp`)
+# Showroom 3D Hiperrealista - Catálogo Unificado PBR (151 Placas: Faplac PBR + Egger PBR + Código 'F' Vizoo)
 
-Este repositorio contiene el **Showroom 3D Interactivo en Three.js** listo para publicar gratis en **GitHub Pages**.
+Repositorio listo para publicar en **GitHub Pages** (`https://github.com/cangrejoPurpura/showroom`).
 
-## Características incluidas
-- **Modelo Exacto de `sebasCocina.skp` (38 piezas reales, 1906 × 600 × 900 mm)**:
-  - Frentes sin tiradores en `H3170 ST12 Roble Kendal natural` (veta vertical en puertas y paño ciego, veta horizontal a 90° en las 3 tapas de cajón).
-  - **Puerta Izquierda (`BM-Puerta`)** con bisagra a la izquierda y **Puerta Central-Derecha (`BM-Puerta#1`)** con bisagra a la derecha.
-  - **3 Cajones Centrales (`BM-3CAJ`, `BM-2CAJ`, `BM-1CAJ`)** con apertura escalonada (`140 mm`, `240 mm`, `350 mm`) e interior blanco como en SketchUp.
-  - Laterales `BM-Lat` con calado superior delantero de `18×60 mm` para encastre de `BM-1FajaFrontal`.
-  - Casco en `212BAR Sauco`, mesada y piso de cajonero en `058DMT Amberes` y zócalo recedido en `F638 ST10 Chromix plata`.
-- **2 Muebles Interactivos a 4.00 metros de distancia**:
-  - **Mueble 1 (Principal)** en `X = 0.00 m`.
-  - **Mueble 2 (Idéntico)** ubicado exactamente **a 4.00 metros hacia su derecha (`X = +4.00 m`)** para probar el desplazamiento de cámara, navegación e interacción independiente o conjunta.
-- **Habitación Vacía Personalizada**:
-  - **Paredes Greige** con acabado mate arquitectónico.
-  - **Zócalos perimetrales de la habitación** en el **mismo tono madera que el mueble** (sincronizados dinámicamente al cambiar de melamina).
-  - **Piso de Porcelanato Calacatta de 120×60 cm** con juntas rectificadas a escala real (`1.20 m × 0.60 m`).
-
-## Cómo publicar en GitHub Pages
-1. Crea un repositorio nuevo en GitHub y sube el contenido descomprimido de este archivo ZIP (`index.html`, carpeta `assets/textures/`, `assets/models/sebasCocina.glb`).
-2. Ve a **Settings → Pages** en tu repositorio de GitHub.
-3. En **Branch**, selecciona `main` (carpeta `/ (root)`) y haz clic en **Save**.
+## Contenido del paquete (100% renovado con las nuevas texturas PBR)
+- **`index.html`**: Motor 3D interactivo en Three.js con:
+  - Interfaz Clean por defecto + Ruedita engranaje (`⚙️`) traslúcida en la esquina superior derecha.
+  - Puntos concéntricos interactivos en puertas y cajones con animación de texto hacia la derecha al hacer clic, y botones concéntricos `3×` más grandes para transportarse entre el **Mueble 1 (`0.00m`)** y el **Mueble 2 (`+4.00m`)**.
+  - Controles personalizados: Clic izquierdo para mover (`PAN`), Ruedita central presionada para girar `360°`, Ruedita adelante/atrás para `Zoom`, y movimiento fluido con teclas `W A S D` y flechas del teclado.
+  - Habitación vacía de paredes Greige, zócalos madera sincronizados, piso porcelanato Calacatta `120×60 cm`, y techo de placas de yeso blanco con garganta LED, perfiles lineales LED y lámparas colgantes modernas con focos `SpotLight`.
+  - **151 Placas PBR (`map` + `normalMap` + `roughnessMap`)**:
+    - **73 Placas Faplac PBR** (todas las líneas con mapas PBR de formato Egger).
+    - **78 Placas Egger / Vizoo PBR**, incluyendo las **25 Placas Código `'F'` (`Vizoo` / `Egger`)** de piedras, hormigones, textiles y metales.
+- **`assets/textures/`**: Contiene **únicamente** las nuevas texturas PBR (`*_base.jpg`, `*_normal.jpg`, `*_roughness.jpg`, `*_thumb.jpg`) de las 151 placas. Todas las texturas viejas fueron eliminadas por completo.
+- **`assets/models/`**: `sebasCocina.glb` y `sebas_cocina_pieces.json` actualizados con los nuevos IDs PBR (`egger_H3170_12`, `faplac_212BAR`, `faplac_058DMT`, `vizoo_F638_10`, `vizoo_W954_SM`).
